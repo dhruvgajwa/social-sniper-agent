@@ -1,0 +1,108 @@
+[
+  {
+    "id": "high-intent-1",
+    "input": "so bored on a Saturday night in Bangalore 😴 what should I do",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.9,
+    "reasoning": "Explicit boredom with actionable request for suggestions",
+    "context": {
+      "location": "Bangalore",
+      "vibe": "casual",
+      "timeframe": "Saturday night"
+    }
+  },
+  {
+    "id": "high-intent-2",
+    "input": "looking for plans this weekend in Mumbai, preferably something chill",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.95,
+    "reasoning": "Active planning intent with specific location and vibe",
+    "context": {
+      "location": "Mumbai",
+      "vibe": "chill",
+      "timeframe": "this weekend"
+    }
+  },
+  {
+    "id": "high-intent-3",
+    "input": "need ideas for tonight in Indiranagar, nothing too expensive",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.9,
+    "reasoning": "Decision-ready with timeframe, location, and budget constraint",
+    "context": {
+      "location": "Indiranagar",
+      "budget": "affordable",
+      "timeframe": "tonight"
+    }
+  },
+  {
+    "id": "high-intent-4",
+    "input": "anyone know good places to visit in Pune this Sunday?",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.85,
+    "reasoning": "Seeking recommendations with specific timeframe",
+    "context": {
+      "location": "Pune",
+      "timeframe": "this Sunday"
+    }
+  },
+  {
+    "id": "low-intent-1",
+    "input": "just had the worst day at work, everything is falling apart",
+    "expectedIntent": "low",
+    "expectedConfidence": 0.95,
+    "reasoning": "General rant without planning intent",
+    "context": {}
+  },
+  {
+    "id": "low-intent-2",
+    "input": "went to this amazing concert last night at Blue Frog! So much fun",
+    "expectedIntent": "low",
+    "expectedConfidence": 0.95,
+    "reasoning": "Past tense, already completed activity",
+    "context": {
+      "location": "Blue Frog"
+    }
+  },
+  {
+    "id": "low-intent-3",
+    "input": "the traffic in Bangalore is insane today, stuck for 2 hours",
+    "expectedIntent": "low",
+    "expectedConfidence": 0.9,
+    "reasoning": "Complaint without planning intent",
+    "context": {
+      "location": "Bangalore"
+    }
+  },
+  {
+    "id": "edge-case-1",
+    "input": "Bangalore weather is so nice today!",
+    "expectedIntent": "low",
+    "expectedConfidence": 0.8,
+    "reasoning": "Positive statement but no planning intent - borderline case",
+    "context": {
+      "location": "Bangalore"
+    }
+  },
+  {
+    "id": "edge-case-2",
+    "input": "wish there was something to do in Delhi this evening",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.75,
+    "reasoning": "Indirect planning intent - borderline case",
+    "context": {
+      "location": "Delhi",
+      "timeframe": "this evening"
+    }
+  },
+  {
+    "id": "edge-case-3",
+    "input": "any cool events happening in Koramangala?",
+    "expectedIntent": "high",
+    "expectedConfidence": 0.8,
+    "reasoning": "Direct question about events - clear planning intent",
+    "context": {
+      "location": "Koramangala"
+    }
+  }
+]

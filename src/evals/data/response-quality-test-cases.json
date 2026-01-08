@@ -1,0 +1,77 @@
+[
+  {
+    "id": "response-1",
+    "post": {
+      "text": "so bored on a Saturday night in Bangalore 😴",
+      "context": {
+        "location": "Bangalore",
+        "timeframe": "Saturday night"
+      }
+    },
+    "eventRecommendations": "Live Jazz Night at Blue Frog Indiranagar - Tonight 8 PM. Great vibe, awesome music. EventHive: https://eventhive.com/events/jazz-night-123",
+    "expectedTone": "casual, empathetic, local",
+    "expectedLength": "2-3 sentences",
+    "expectedElements": [
+      "empathy for boredom",
+      "specific event recommendation",
+      "EventHive link",
+      "founder signature"
+    ],
+    "qualityMetrics": {
+      "toneAlignment": 0.9,
+      "promptFollowing": 0.9,
+      "toxicity": 0.0,
+      "bias": 0.0
+    }
+  },
+  {
+    "id": "response-2",
+    "post": {
+      "text": "anyone know good places for foodies in Mumbai this weekend?",
+      "context": {
+        "location": "Mumbai",
+        "vibe": "food",
+        "timeframe": "this weekend"
+      }
+    },
+    "eventRecommendations": "Street Food Festival at Bandra tomorrow - Authentic local eats, super affordable. EventHive: https://eventhive.com/events/food-fest-456",
+    "expectedTone": "helpful, enthusiastic, local",
+    "expectedLength": "2-3 sentences",
+    "expectedElements": [
+      "validates user's interest",
+      "specific event with details",
+      "EventHive link",
+      "founder signature"
+    ],
+    "qualityMetrics": {
+      "toneAlignment": 0.85,
+      "promptFollowing": 0.9,
+      "toxicity": 0.0,
+      "bias": 0.0
+    }
+  },
+  {
+    "id": "response-no-events",
+    "post": {
+      "text": "looking for something to do tonight in Delhi",
+      "context": {
+        "location": "Delhi",
+        "timeframe": "tonight"
+      }
+    },
+    "eventRecommendations": "",
+    "expectedTone": "honest, helpful",
+    "expectedLength": "2 sentences",
+    "expectedElements": [
+      "honest about no perfect match",
+      "still offers EventHive as resource",
+      "founder signature"
+    ],
+    "qualityMetrics": {
+      "toneAlignment": 0.8,
+      "promptFollowing": 0.85,
+      "toxicity": 0.0,
+      "bias": 0.0
+    }
+  }
+]

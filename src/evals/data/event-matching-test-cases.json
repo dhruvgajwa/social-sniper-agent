@@ -1,0 +1,72 @@
+[
+  {
+    "id": "event-match-1",
+    "post": {
+      "text": "looking for live music tonight in Indiranagar",
+      "context": {
+        "location": "Indiranagar",
+        "vibe": "music",
+        "timeframe": "tonight"
+      }
+    },
+    "expectedEventTypes": ["concert", "live music", "music festival"],
+    "expectedRelevance": 0.9,
+    "notes": "Should match music events in Indiranagar happening today"
+  },
+  {
+    "id": "event-match-2",
+    "post": {
+      "text": "need something chill and affordable this weekend in Bangalore",
+      "context": {
+        "location": "Bangalore",
+        "vibe": "chill",
+        "budget": "affordable",
+        "timeframe": "this weekend"
+      }
+    },
+    "expectedEventTypes": ["casual meetup", "outdoor activity", "cafe event"],
+    "expectedRelevance": 0.8,
+    "notes": "Should avoid expensive or high-energy events"
+  },
+  {
+    "id": "event-match-3",
+    "post": {
+      "text": "what's happening in Mumbai for foodies this Saturday?",
+      "context": {
+        "location": "Mumbai",
+        "vibe": "food",
+        "timeframe": "this Saturday"
+      }
+    },
+    "expectedEventTypes": ["food festival", "food tasting", "culinary event"],
+    "expectedRelevance": 0.85,
+    "notes": "Should prioritize food-related events"
+  },
+  {
+    "id": "event-match-4",
+    "post": {
+      "text": "looking for family-friendly activities in Pune",
+      "context": {
+        "location": "Pune",
+        "vibe": "family-friendly"
+      }
+    },
+    "expectedEventTypes": ["family event", "kid-friendly", "outdoor activity"],
+    "expectedRelevance": 0.8,
+    "notes": "Should avoid nightlife or adult-only events"
+  },
+  {
+    "id": "no-match-1",
+    "post": {
+      "text": "looking for tech conferences in Chennai next month",
+      "context": {
+        "location": "Chennai",
+        "vibe": "professional",
+        "timeframe": "next month"
+      }
+    },
+    "expectedEventTypes": [],
+    "expectedRelevance": 0.3,
+    "notes": "Likely no events in database - should gracefully handle no matches"
+  }
+]
