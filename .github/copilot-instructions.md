@@ -23,9 +23,10 @@ Autonomous AI agent for Happenings that monitors Reddit/Twitter for event-planni
 
 2. **5 Tools** (`src/mastra/tools/`):
    - `reddit-monitor.ts` / `twitter-monitor.ts` - Fetch posts from Indian city subreddits/geo-tagged tweets
-  - `event-search.ts` - Mock Happenings database search (replace with real MongoDB/vector DB)
-   - `notification.ts` - Send drafts to Telegram/Slack for approval
-   - `post-to-platform.ts` - Publish approved responses to Reddit/Twitter
+
+- `event-search.ts` - Mock Happenings database search (replace with real MongoDB/vector DB)
+- `notification.ts` - Send drafts to Telegram/Slack for approval
+- `post-to-platform.ts` - Publish approved responses to Reddit/Twitter
 
 3. **Workflow** (`src/mastra/workflows/social-sniper-pipeline.ts`):
    - **5-step pipeline**: Fetch → Classify → Find Events → Generate Response → Approve/Post
