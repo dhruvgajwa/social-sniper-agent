@@ -7,12 +7,6 @@ import { intentClassifierAgent } from "./agents/intent-classifier";
 import { eventRecommenderAgent } from "./agents/event-recommender";
 import { responseWriterAgent } from "./agents/response-writer";
 
-// Import tools
-import { redditMonitorTool } from "./tools/reddit-monitor";
-import { twitterMonitorTool } from "./tools/twitter-monitor";
-import { eventSearchTool } from "./tools/event-search";
-import { notificationTool } from "./tools/notification";
-
 // Import workflows
 import { socialSniperWorkflow } from "./workflows/social-sniper-pipeline";
 
@@ -21,10 +15,12 @@ import { socialSniperWorkflow } from "./workflows/social-sniper-pipeline";
  *
  * Configures:
  * - 3 AI Agents (intent classifier, event recommender, response writer)
- * - 4 Tools (reddit, twitter, event search, notifications)
- * - 1 Workflow (complete social sniper pipeline)
+ * - Tools (reddit mentions, event search, notifications, posting)
+ * - 1 Workflow (mention-based social sniper pipeline)
  * - Storage (LibSQL for workflow state)
  * - Logging (Pino for structured logs)
+ * 
+ * Note: Tools auto-register and don't need to be listed here.
  */
 export const mastra = new Mastra({
   agents: {
@@ -42,7 +38,7 @@ export const mastra = new Mastra({
   }),
 
   logger: new PinoLogger({
-    name: "SocialSniper",
+    name: "HappeningsBot",
     level: "info",
   }),
 });

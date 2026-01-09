@@ -48,7 +48,11 @@ export const postToPlatformTool = createTool({
 });
 
 /**
- * Post a comment to a Reddit submission
+ * Post a reply to a Reddit comment or submission
+ * 
+ * For mention-based replies, the postId can be either:
+ * - A comment ID (t1_xxx) - replies to the comment where the bot was mentioned
+ * - A submission ID (t3_xxx or just xxx) - replies to the original post
  */
 async function postToReddit(
   postId: string,
@@ -63,19 +67,31 @@ async function postToReddit(
 
   try {
     const reddit = new Snoowrap({
-      userAgent: process.env.REDDIT_USER_AGENT || "Happenings Social Sniper Bot v1.0",
+      userAgent: process.env.REDDIT_USER_AGENT || "Happenings Event Bot v1.0 (by /u/Happenings_bot)",
       clientId: process.env.REDDIT_CLIENT_ID!,
       clientSecret: process.env.REDDIT_CLIENT_SECRET!,
       username: process.env.REDDIT_USERNAME,
       password: process.env.REDDIT_PASSWORD,
     });
 
-    // Get the submission (post) and post a comment
-    const submission = reddit.getSubmission(postId);
-    // @ts-ignore - Snoowrap has circular type reference issue
-    const comment = await submission.reply(message);
+    let comment: any;
 
-    console.log(`✅ Posted Reddit comment: https://reddit.com${comment.permalink}`);
+    // Determine if this is a comment or submission ID
+    if (postId.startsWith("t1_") || postId.length === 7) {
+      // This is a comment ID - reply to the comment
+      const commentId = postId.replace("t1_", "");
+      const targetComment = reddit.getComment(commentId);
+      // @ts-ignore - Snoowrap has circular type reference issue
+      comment = await targetComment.reply(message);
+    } else {
+      // This is a submission ID - reply to the post
+      const submissionId = postId.replace("t3_", "");
+      const submission = reddit.getSubmission(submissionId);
+      // @ts-ignore - Snoowrap has circular type reference issue
+      comment = await submission.reply(message);
+    }
+
+    console.log(`✅ Posted Reddit reply: https://reddit.com${comment.permalink}`);
 
     return {
       posted: true,

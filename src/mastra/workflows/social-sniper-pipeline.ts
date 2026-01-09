@@ -1,20 +1,22 @@
 import { createWorkflow, createStep } from "@mastra/core/workflows";
 import { z } from "zod";
 import { redditMonitorTool } from "../tools/reddit-monitor";
-import { twitterMonitorTool } from "../tools/twitter-monitor";
 import { notificationTool } from "../tools/notification";
 import { postToPlatformTool } from "../tools/post-to-platform";
 
 /**
- * Social Sniper Pipeline Workflow
+ * Social Sniper Pipeline Workflow (Mentions-Based)
  *
- * Orchestrates the complete flow:
- * 1. Ingest posts from Reddit/Twitter
- * 2. Classify intent (high vs low)
+ * Orchestrates the complete flow for responding to bot mentions:
+ * 1. Fetch mentions of u/Happenings_bot from Reddit inbox
+ * 2. Classify intent (high vs low) - filter genuine event searches
  * 3. Extract context (location, vibe, etc.)
  * 4. Search for matching events (RAG)
  * 5. Generate response draft
- * 6. Send for human approval
+ * 6. Send for human approval (or auto-post if enabled)
+ * 
+ * NOTE: This bot reacts to mentions only - it does NOT crawl/scrape subreddits.
+ * Users explicitly invoke the bot by mentioning u/Happenings_bot in their posts/comments.
  */
 
 export const SocialPost = z.object({
@@ -24,6 +26,7 @@ export const SocialPost = z.object({
   author: z.string(),
   url: z.string(),
   createdAt: z.string(),
+  parentContext: z.string().optional().describe("Context from parent post if this is a comment mention"),
 });
 
 const HighIntentPost = SocialPost.extend({
@@ -39,74 +42,67 @@ const HighIntentPost = SocialPost.extend({
     .optional(),
 });
 
-// Step 1: Fetch posts from social platforms
-const fetchPostsStep = createStep({
-  id: "fetch-posts",
-  description: "Monitors Reddit and Twitter for fresh posts",
+// Step 1: Fetch mentions from Reddit inbox
+const fetchMentionsStep = createStep({
+  id: "fetch-mentions",
+  description: "Fetches mentions of u/Happenings_bot from Reddit inbox",
   inputSchema: z.object({
-    platforms: z.array(z.enum(["reddit", "twitter"])),
-    cities: z.array(z.string()),
+    botUsername: z.string().default("Happenings_bot"),
+    maxMentions: z.number().default(25),
+    freshnessHours: z.number().default(2),
+    markAsRead: z.boolean().default(false),
   }),
   outputSchema: z.object({
     posts: z.array(SocialPost),
     totalFetched: z.number(),
+    unreadCount: z.number(),
   }),
   execute: async ({ inputData, mastra, runtimeContext }) => {
-    const { platforms, cities } = inputData;
+    const { botUsername, maxMentions, freshnessHours, markAsRead } = inputData;
     const allPosts: any[] = [];
 
-    // Fetch from Reddit
-    if (platforms.includes("reddit")) {
-      const subreddits = cities.map((city) => city.toLowerCase());
+    // Fetch mentions from Reddit
+    const mentionResult = await redditMonitorTool.execute({
+      context: {
+        botUsername,
+        maxMentions,
+        freshnessHours,
+        markAsRead,
+      },
+      runtimeContext,
+    });
 
-      const redditResult = await redditMonitorTool.execute({
-        context: {
-          subreddits,
-          maxPosts: 20,
-          freshnessHours: 2,
-        },
-        runtimeContext,
-      });
+    const mentions = mentionResult?.mentions || [];
 
-      const redditPosts = (redditResult?.posts || []).map((post: any) => ({
-        id: post.id,
+    // Convert mentions to SocialPost format
+    const redditPosts = mentions.map((mention: any) => {
+      // Combine body with parent context for better understanding
+      let fullText = mention.body || "";
+      if (mention.context) {
+        fullText = `[Parent Post Context]\n${mention.context}\n\n[User's Message]\n${fullText}`;
+      } else if (mention.title) {
+        fullText = `[Post Title: ${mention.title}]\n\n${fullText}`;
+      }
+
+      return {
+        id: mention.id,
         platform: "reddit" as const,
-        text: `${post.title}\n\n${post.selftext}`,
-        author: post.author,
-        url: `https://reddit.com${post.permalink}`,
-        createdAt: new Date((post.created_utc || Date.now() / 1000) * 1000).toISOString(),
-      }));
+        text: fullText,
+        author: mention.author,
+        url: `https://reddit.com${mention.permalink}`,
+        createdAt: new Date((mention.created_utc || Date.now() / 1000) * 1000).toISOString(),
+        parentContext: mention.context,
+      };
+    });
 
-      allPosts.push(...redditPosts);
-    }
+    allPosts.push(...redditPosts);
 
-    // Fetch from Twitter
-    if (platforms.includes("twitter")) {
-      const twitterResult = await twitterMonitorTool.execute({
-        context: {
-          cities,
-          keywords: cities.map((c: string) => c.toLowerCase()),
-          maxTweets: 20,
-          freshnessHours: 2,
-        },
-        runtimeContext,
-      });
-
-      const tweets = (twitterResult?.tweets || []).map((tweet: any) => ({
-        id: tweet.id,
-        platform: "twitter" as const,
-        text: tweet.text,
-        author: tweet.author_username || tweet.author_id,
-        url: `https://twitter.com/i/web/status/${tweet.id}`,
-        createdAt: tweet.created_at,
-      }));
-
-      allPosts.push(...tweets);
-    }
+    console.log(`📬 Fetched ${allPosts.length} mentions for u/${botUsername}`);
 
     return {
       posts: allPosts,
       totalFetched: allPosts.length,
+      unreadCount: mentionResult?.unreadCount || 0,
     };
   },
 });
@@ -425,10 +421,12 @@ const autoPostStep = createStep({
 // Compose the full workflow
 export const socialSniperWorkflow = createWorkflow({
   id: "social-sniper-pipeline",
-  description: "Complete autonomous pipeline for social listening and engagement",
+  description: "Mention-based pipeline for responding to u/Happenings_bot mentions with event recommendations",
   inputSchema: z.object({
-    platforms: z.array(z.enum(["reddit", "twitter"])).default(["reddit", "twitter"]),
-    cities: z.array(z.string()).default(["Bangalore", "Mumbai", "Delhi", "Pune", "Hyderabad"]),
+    botUsername: z.string().default("Happenings_bot").describe("Reddit bot username to fetch mentions for"),
+    maxMentions: z.number().default(25).describe("Maximum mentions to process per run"),
+    freshnessHours: z.number().default(2).describe("Only process mentions newer than this"),
+    markAsRead: z.boolean().default(false).describe("Mark processed mentions as read in Reddit inbox"),
   }),
   outputSchema: z.object({
     totalProcessed: z.number(),
@@ -441,7 +439,7 @@ export const socialSniperWorkflow = createWorkflow({
     postedUrls: z.array(z.string()).optional(),
   }),
 })
-  .then(fetchPostsStep)
+  .then(fetchMentionsStep)
   .then(classifyIntentStep)
   .then(findEventsStep)
   .then(generateResponseStep)
