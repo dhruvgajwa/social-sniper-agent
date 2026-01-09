@@ -79,7 +79,7 @@ export const redditMonitorTool = createTool({
     }
 
     const reddit = new Snoowrap({
-      userAgent: process.env.REDDIT_USER_AGENT || "EventHive Social Sniper Bot v1.0",
+      userAgent: process.env.REDDIT_USER_AGENT || "Happenings Social Sniper Bot v1.0",
       clientId: process.env.REDDIT_CLIENT_ID!,
       clientSecret: process.env.REDDIT_CLIENT_SECRET!,
       username: "", // Read-only, no posting

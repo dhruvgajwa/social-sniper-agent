@@ -1,7 +1,7 @@
 {
   "name": "social-sniper-agent",
   "version": "1.0.0",
-  "description": "AI-powered social listening agent for EventHive growth automation",
+  "description": "AI-powered social listening agent for Happenings growth automation",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

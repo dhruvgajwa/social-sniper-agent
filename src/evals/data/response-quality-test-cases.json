@@ -8,13 +8,13 @@
         "timeframe": "Saturday night"
       }
     },
-    "eventRecommendations": "Live Jazz Night at Blue Frog Indiranagar - Tonight 8 PM. Great vibe, awesome music. EventHive: https://eventhive.com/events/jazz-night-123",
+    "eventRecommendations": "Live Jazz Night at Blue Frog Indiranagar - Tonight 8 PM. Great vibe, awesome music. Happenings: https://happenings.com/events/jazz-night-123",
     "expectedTone": "casual, empathetic, local",
     "expectedLength": "2-3 sentences",
     "expectedElements": [
       "empathy for boredom",
       "specific event recommendation",
-      "EventHive link",
+      "Happenings link",
       "founder signature"
     ],
     "qualityMetrics": {
@@ -34,13 +34,13 @@
         "timeframe": "this weekend"
       }
     },
-    "eventRecommendations": "Street Food Festival at Bandra tomorrow - Authentic local eats, super affordable. EventHive: https://eventhive.com/events/food-fest-456",
+    "eventRecommendations": "Street Food Festival at Bandra tomorrow - Authentic local eats, super affordable. Happenings: https://happenings.com/events/food-fest-456",
     "expectedTone": "helpful, enthusiastic, local",
     "expectedLength": "2-3 sentences",
     "expectedElements": [
       "validates user's interest",
       "specific event with details",
-      "EventHive link",
+      "Happenings link",
       "founder signature"
     ],
     "qualityMetrics": {
@@ -64,7 +64,7 @@
     "expectedLength": "2 sentences",
     "expectedElements": [
       "honest about no perfect match",
-      "still offers EventHive as resource",
+      "still offers Happenings as resource",
       "founder signature"
     ],
     "qualityMetrics": {

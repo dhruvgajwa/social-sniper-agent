@@ -28,7 +28,7 @@ built-in scorers and custom metrics.
    - Use `ToneConsistencyScorer` to validate casual, helpful "bhai/bro" tone
      adherence
    - Add `ModerationPassRateScorer` to track safety filter effectiveness
-   - Create `LinkAccuracyScorer` to verify EventHive URLs are properly formatted
+   - Create `LinkAccuracyScorer` to verify Happenings URLs are properly formatted
 
 4. **Set Up End-to-End Workflow Evaluation** in
    `src/mastra/workflows/eval-workflow.ts`
@@ -53,7 +53,7 @@ built-in scorers and custom metrics.
    responses to build a reinforcement learning dataset? This could improve
    response quality over time.
 
-2. **Test Data Sources**: Use real historical EventHive interactions, manually
+2. **Test Data Sources**: Use real historical Happenings interactions, manually
    labeled social posts, or synthetic data? Hybrid approach recommended - start
    with 50 manual labels + 200 synthetic examples.
 

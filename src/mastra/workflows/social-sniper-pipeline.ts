@@ -183,7 +183,7 @@ const classifyIntentStep = createStep({
 // Step 3: Find matching events for each high-intent post
 const findEventsStep = createStep({
   id: "find-events",
-  description: "Searches EventHive database for relevant events",
+  description: "Searches Happenings database for relevant events",
   inputSchema: z.object({
     highIntentPosts: z.array(HighIntentPost),
   }),

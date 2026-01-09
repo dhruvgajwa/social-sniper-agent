@@ -16,7 +16,7 @@ const EventResult = z.object({
 export const eventSearchTool = createTool({
   id: "event-search",
   description: `
-    Performs semantic search on the EventHive database to find relevant events.
+    Performs semantic search on the Happenings database to find relevant events.
     Takes user context (city, vibe, budget) and returns matching events.
     This is the RAG retrieval component that queries the event database.
   `,
@@ -40,12 +40,12 @@ export const eventSearchTool = createTool({
   execute: async ({ context }) => {
     const { city, query, maxResults, date, category } = context;
 
-    // TODO: Replace with actual EventHive database connection
+    // TODO: Replace with actual Happenings database connection
     // This is a placeholder that would connect to your MongoDB or API
 
     try {
-      // Example: Connect to EventHive database
-      const dbUrl = process.env.EVENTHIVE_DB_URL;
+      // Example: Connect to Happenings database
+      const dbUrl = process.env.HAPPENINGS_DB_URL;
 
       // Simulate semantic search
       // In production, this would use vector embeddings with a service like:
@@ -63,7 +63,7 @@ export const eventSearchTool = createTool({
           location: "Indiranagar",
           city: city,
           category: "music",
-          url: "https://eventhive.com/events/evt_123",
+          url: "https://happenings.com/events/evt_123",
           price: "₹500",
         },
         {
@@ -74,7 +74,7 @@ export const eventSearchTool = createTool({
           location: "Koramangala",
           city: city,
           category: "food",
-          url: "https://eventhive.com/events/evt_124",
+          url: "https://happenings.com/events/evt_124",
           price: "Free",
         },
         {
@@ -85,7 +85,7 @@ export const eventSearchTool = createTool({
           location: "HSR Layout",
           city: city,
           category: "networking",
-          url: "https://eventhive.com/events/evt_125",
+          url: "https://happenings.com/events/evt_125",
           price: "₹300",
         },
       ];

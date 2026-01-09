@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Autonomous AI agent for EventHive that monitors Reddit/Twitter for event-planning intent, recommends matching events using RAG, and generates personalized responses. Features human-in-the-loop approval workflow with Telegram/Slack integration.
+Autonomous AI agent for Happenings that monitors Reddit/Twitter for event-planning intent, recommends matching events using RAG, and generates personalized responses. Features human-in-the-loop approval workflow with Telegram/Slack integration.
 
 ## Tech Stack
 
@@ -23,7 +23,7 @@ Autonomous AI agent for EventHive that monitors Reddit/Twitter for event-plannin
 
 2. **5 Tools** (`src/mastra/tools/`):
    - `reddit-monitor.ts` / `twitter-monitor.ts` - Fetch posts from Indian city subreddits/geo-tagged tweets
-   - `event-search.ts` - Mock EventHive database search (replace with real MongoDB/vector DB)
+  - `event-search.ts` - Mock Happenings database search (replace with real MongoDB/vector DB)
    - `notification.ts` - Send drafts to Telegram/Slack for approval
    - `post-to-platform.ts` - Publish approved responses to Reddit/Twitter
 
@@ -150,7 +150,7 @@ npm run eval:view              # View evaluation results
 
 ## Next Production Steps
 
-1. Replace mock data in `event-search.ts` with real EventHive MongoDB/API
+1. Replace mock data in `event-search.ts` with real Happenings MongoDB/API
 2. Implement vector embeddings (OpenAI) + vector DB (Pinecone/Weaviate) for semantic event search
 3. Set up cron/Inngest scheduling (every 1-2 hours to respect rate limits)
 4. Add duplicate post tracking to avoid re-processing

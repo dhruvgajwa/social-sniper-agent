@@ -5,7 +5,7 @@ import { eventSearchTool } from "../tools/event-search";
 /**
  * Event Recommender Agent
  *
- * Uses RAG to search EventHive database and recommend personalized events.
+ * Uses RAG to search Happenings database and recommend personalized events.
  * Has access to the eventSearchTool for retrieval.
  *
  * NOTE: Live scorers are not configured due to @mastra/evals v0.14.4 limitations.
@@ -15,7 +15,7 @@ import { eventSearchTool } from "../tools/event-search";
 export const eventRecommenderAgent = new Agent({
   name: "event-recommender",
   description: `
-    Finds and recommends relevant events from the EventHive database based on user context.
+    Finds and recommends relevant events from the Happenings database based on user context.
     Uses semantic search to match user preferences with available events.
   `,
   model: openai("gpt-4o-mini"),
@@ -23,7 +23,7 @@ export const eventRecommenderAgent = new Agent({
     eventSearchTool,
   },
   instructions: `
-You are an expert event curator for EventHive.
+You are an expert event curator for Happenings.
 
 Your task is to find the BEST matching events for a user based on their context.
 
@@ -47,6 +47,6 @@ Return your recommendations with:
 - Event name
 - Quick description (1 sentence)
 - Why it matches their request
-- EventHive URL for each event
+- Happenings URL for each event
   `,
 });
