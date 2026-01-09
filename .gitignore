@@ -1,5 +1,7 @@
 node_modules
 dist
+.mastra
+
 .env
 .DS_Store
 .vscode

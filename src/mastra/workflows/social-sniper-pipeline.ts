@@ -17,7 +17,7 @@ import { postToPlatformTool } from "../tools/post-to-platform";
  * 6. Send for human approval
  */
 
-const SocialPost = z.object({
+export const SocialPost = z.object({
   id: z.string(),
   platform: z.enum(["reddit", "twitter"]),
   text: z.string(),

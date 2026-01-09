@@ -1,6 +1,8 @@
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
 import Snoowrap from "snoowrap";
+import fs from "fs";
+import path from "path";
 
 const SubredditPost = z.object({
   id: z.string(),
@@ -12,6 +14,12 @@ const SubredditPost = z.object({
   permalink: z.string(),
   url: z.string(),
   score: z.number(),
+  metadata: z
+    .object({
+      intent: z.number().min(0).max(1).optional(),
+      source: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const redditMonitorTool = createTool({
@@ -34,6 +42,41 @@ export const redditMonitorTool = createTool({
   }),
   execute: async ({ context }) => {
     const { subreddits, maxPosts, freshnessHours } = context;
+    // If test dataset flag set, load local JSON instead of calling Reddit API
+    const useTest = process.env.USE_TEST_DATA_REDDIT === "true";
+
+    if (useTest) {
+      try {
+        const testFile = path.join(process.cwd(), "src", "test-data", "reddit_test_posts.json");
+        const raw = fs.readFileSync(testFile, "utf-8");
+        const items = JSON.parse(raw) as any[];
+
+        // Filter by requested subreddits and freshness
+        const cutoffTime = Math.floor(Date.now() / 1000) - (freshnessHours || 2) * 60 * 60;
+
+        const filtered = items
+          .filter((p) => subreddits.includes(String(p.subreddit).toLowerCase()))
+          .filter((p) => (p.created_utc || 0) > cutoffTime)
+          .slice(0, maxPosts || 20)
+          .map((post) => ({
+            id: post.id,
+            title: post.title,
+            selftext: post.selftext,
+            author: post.author,
+            subreddit: post.subreddit,
+            created_utc: post.created_utc,
+            permalink: post.permalink,
+            url: post.url,
+            score: post.score,
+            metadata: post.metadata,
+          }));
+
+        return { posts: filtered, totalFetched: filtered.length };
+      } catch (err) {
+        console.error("Failed to load reddit test data:", err);
+        return { posts: [], totalFetched: 0 };
+      }
+    }
 
     const reddit = new Snoowrap({
       userAgent: process.env.REDDIT_USER_AGENT || "EventHive Social Sniper Bot v1.0",

@@ -73,5 +73,8 @@ async function runSocialSniperAgent() {
   }
 }
 
-// Run the agent
-runSocialSniperAgent().catch(console.error);
+// Only run the agent when this file is executed directly (not when imported)
+// This prevents side-effects when other modules import `src/index.ts`.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  runSocialSniperAgent().catch(console.error);
+}

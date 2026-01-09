@@ -18,7 +18,7 @@ export const intentClassifierAgent = new Agent({
     Analyzes social media posts to detect high-intent signals for event planning.
     Distinguishes between genuine "looking for plans" intent vs. casual chatter.
   `,
-  model: openai("gpt-4o-mini"),
+  model: openai("gpt-5-mini"),
   instructions: `
 You are an expert at analyzing social media posts to detect planning intent.
 
