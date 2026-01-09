@@ -1,6 +1,7 @@
 node_modules
 dist
 .mastra
+docs
 
 .env
 .DS_Store
