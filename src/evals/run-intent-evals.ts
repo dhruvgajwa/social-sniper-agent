@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { mastra } from "../mastra/index.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";

@@ -10,10 +10,14 @@ import { postToPlatformTool } from "../tools/post-to-platform";
  * Orchestrates the complete flow for responding to bot mentions:
  * 1. Fetch mentions of u/Happenings_bot from Reddit inbox
  * 2. Classify intent (high vs low) - filter genuine event searches
- * 3. Extract context (location, vibe, etc.)
- * 4. Search for matching events (RAG)
- * 5. Generate response draft
- * 6. Send for human approval (or auto-post if enabled)
+ * 3. Find matching events using independent event recommender
+ * 4. Generate response draft with Happenings URLs
+ * 5. Send for human approval (or auto-post if enabled)
+ *
+ * REFACTORED:
+ * - Intent classifier focuses on intent only (no vibe/context extraction)
+ * - Event recommender works independently with just the post text
+ * - Response writer uses Happenings URLs as event title hrefs
  * 
  * NOTE: This bot reacts to mentions only - it does NOT crawl/scrape subreddits.
  * Users explicitly invoke the bot by mentioning u/Happenings_bot in their posts/comments.
@@ -29,17 +33,12 @@ export const SocialPost = z.object({
   parentContext: z.string().optional().describe("Context from parent post if this is a comment mention"),
 });
 
+// REFACTORED: Simplified schema - no longer includes context extraction
+// The event recommender extracts context independently from the post text
 const HighIntentPost = SocialPost.extend({
   intentScore: z.number(),
   reasoning: z.string(),
-  context: z
-    .object({
-      location: z.string().optional(),
-      vibe: z.string().optional(),
-      budget: z.string().optional(),
-      timeframe: z.string().optional(),
-    })
-    .optional(),
+  evidence: z.array(z.string()).optional().describe("Key phrases indicating intent"),
 });
 
 // Step 1: Fetch mentions from Reddit inbox
@@ -108,6 +107,8 @@ const fetchMentionsStep = createStep({
 });
 
 // Step 2: Classify intent for each post
+// REFACTORED: Simplified output - only intent, confidence, reasoning, evidence
+// No longer extracts location/vibe/budget - that's the event recommender's job
 const classifyIntentStep = createStep({
   id: "classify-intent",
   description: "Analyzes posts to detect high-intent planning signals",
@@ -119,12 +120,7 @@ const classifyIntentStep = createStep({
       SocialPost.extend({
         intentScore: z.number(),
         reasoning: z.string(),
-        context: z.object({
-          location: z.string().optional(),
-          vibe: z.string().optional(),
-          budget: z.string().optional(),
-          timeframe: z.string().optional(),
-        }),
+        evidence: z.array(z.string()).describe("Key phrases indicating intent"),
       })
     ),
     totalProcessed: z.number(),
@@ -140,15 +136,10 @@ const classifyIntentStep = createStep({
       const result = await intentAgent.generate(`Analyze this post:\n\n${post.text}`, {
         structuredOutput: {
           schema: z.object({
-            intent: z.enum(["high", "low"]).describe("Classification result"),
+            intent: z.enum(["HIGH", "LOW"]).describe("Classification result"),
             confidence: z.number().min(0).max(1).describe("Confidence score (0-1)"),
             reasoning: z.string().describe("Brief explanation of the classification"),
-            context: z.object({
-              location: z.string().optional().describe("Detected city or neighborhood"),
-              vibe: z.string().optional().describe("Inferred mood or preference"),
-              budget: z.string().optional().describe("Budget hints if mentioned"),
-              timeframe: z.string().optional().describe("When they want to do something"),
-            }),
+            evidence: z.array(z.string()).describe("Key phrases/signals that indicate the intent"),
           }),
         },
       });
@@ -157,14 +148,14 @@ const classifyIntentStep = createStep({
       const classification = result.object;
       if (!classification) continue;
 
-      const { intent, confidence, reasoning, context } = classification;
+      const { intent, confidence, reasoning, evidence } = classification;
 
-      if (intent === "high" && confidence >= intentThreshold) {
+      if (intent === "HIGH" && confidence >= intentThreshold) {
         highIntentPosts.push({
           ...post,
           intentScore: confidence,
           reasoning,
-          context,
+          evidence: evidence || [],
         });
       }
     }
@@ -177,6 +168,8 @@ const classifyIntentStep = createStep({
 });
 
 // Step 3: Find matching events for each high-intent post
+// REFACTORED: Event recommender now works independently - just pass the post text
+// It extracts location, tags, time, budget, etc. on its own using modular tools
 const findEventsStep = createStep({
   id: "find-events",
   description: "Searches Happenings database for relevant events",
@@ -197,19 +190,11 @@ const findEventsStep = createStep({
     const postsWithEvents: any[] = [];
 
     for (const post of highIntentPosts) {
-      const context = post.context ?? {};
-
-      const query = `
-User post: ${post.text}
-
-Context:
-- Location: ${context.location || "not specified"}
-- Vibe: ${context.vibe || "not specified"}
-- Budget: ${context.budget || "not specified"}
-- Timeframe: ${context.timeframe || "not specified"}
-
-Find the best matching events.
-      `.trim();
+      // REFACTORED: Pass just the post text - agent extracts everything it needs
+      // Include parent context if available (for comment mentions)
+      const query = post.parentContext
+        ? `Parent post:\n${post.parentContext}\n\nUser comment:\n${post.text}\n\nFind the best matching events for this user.`
+        : `User post:\n${post.text}\n\nFind the best matching events for this user.`;
 
       try {
         const result = await eventAgent.generate(query);
@@ -219,6 +204,7 @@ Find the best matching events.
           recommendations: result.text || "",
         });
       } catch (err) {
+        console.error(`[findEventsStep] Error processing post ${post.id}:`, err);
         postsWithEvents.push({
           ...post,
           recommendations: "",
@@ -234,6 +220,8 @@ Find the best matching events.
 });
 
 // Step 4: Generate response drafts
+// REFACTORED: Simplified prompt - response writer uses event recommendations as-is
+// Event recommendations already include Happenings URLs with UTM tracking
 const generateResponseStep = createStep({
   id: "generate-response",
   description: "Crafts personalized responses for each post",
@@ -255,19 +243,17 @@ const generateResponseStep = createStep({
     const drafts: any[] = [];
 
     for (const post of postsWithEvents) {
+      // REFACTORED: Simplified prompt - no pre-extracted context
+      // The event recommendations already contain all the relevant info
       const prompt = `
 Original Post:
 ${post.text}
 
-Detected Context:
-- Location: ${post.context?.location || "not specified"}
-- Vibe: ${post.context?.vibe || "not specified"}
-- Timeframe: ${post.context?.timeframe || "not specified"}
-
-Event Recommendations:
-${post.recommendations ?? ""}
+Event Recommendations (use these happeningsUrl links as href for event titles):
+${post.recommendations ?? "No events found."}
 
 Write a response following the tone and structure guidelines.
+Use the happeningsUrl from each event as the href link for the event title.
       `.trim();
 
       try {
@@ -278,6 +264,7 @@ Write a response following the tone and structure guidelines.
           draftResponse: result.text || "",
         });
       } catch (err) {
+        console.error(`[generateResponseStep] Error for post ${post.id}:`, err);
         drafts.push({ post, draftResponse: "" });
       }
     }

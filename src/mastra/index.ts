@@ -6,6 +6,7 @@ import { PinoLogger } from "@mastra/loggers";
 import { intentClassifierAgent } from "./agents/intent-classifier";
 import { eventRecommenderAgent } from "./agents/event-recommender";
 import { responseWriterAgent } from "./agents/response-writer";
+import { queryToParamsAgent } from "./agents/query-to-params";
 
 // Import workflows
 import { socialSniperWorkflow } from "./workflows/social-sniper-pipeline";
@@ -14,8 +15,11 @@ import { socialSniperWorkflow } from "./workflows/social-sniper-pipeline";
  * Main Mastra Instance
  *
  * Configures:
- * - 3 AI Agents (intent classifier, event recommender, response writer)
- * - Tools (reddit mentions, event search, notifications, posting)
+ * - 4 AI Agents:
+ *   - intentClassifierAgent: Detects event-seeking intent (HIGH/LOW)
+ *   - eventRecommenderAgent: Finds matching events (works independently)
+ *   - responseWriterAgent: Crafts human-like responses with Happenings URLs
+ *   - queryToParamsAgent: Converts queries to search parameters (for direct site use)
  * - 1 Workflow (mention-based social sniper pipeline)
  * - Storage (LibSQL for workflow state)
  * - Logging (Pino for structured logs)
@@ -27,6 +31,7 @@ export const mastra = new Mastra({
     intentClassifierAgent,
     eventRecommenderAgent,
     responseWriterAgent,
+    queryToParamsAgent,
   },
 
   workflows: {
@@ -42,3 +47,11 @@ export const mastra = new Mastra({
     level: "info",
   }),
 });
+
+// Export agents for independent use
+export {
+  intentClassifierAgent,
+  eventRecommenderAgent,
+  responseWriterAgent,
+  queryToParamsAgent,
+};

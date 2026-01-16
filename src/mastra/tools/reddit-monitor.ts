@@ -3,6 +3,11 @@ import { z } from "zod";
 import Snoowrap from "snoowrap";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+
+// ESM-compatible __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Reddit Mention Schema
@@ -56,41 +61,59 @@ export const redditMonitorTool = createTool({
 
     // If test dataset flag set, load local JSON instead of calling Reddit API
     const useTest = process.env.USE_TEST_DATA_REDDIT === "true";
-
+    console.log(`🔧 Reddit Monitor Tool - Using test data: ${useTest}`);
     if (useTest) {
       try {
-        const testFile = path.join(process.cwd(), "src", "test-data", "reddit_mentions_test.json");
+        // const testFile = path.join(process.cwd(), "src", "test-data", "reddit_mentions_test.json");
 
         // Fall back to old test file format if new one doesn't exist
         let raw: string;
         let items: any[];
 
-        if (fs.existsSync(testFile)) {
-          raw = fs.readFileSync(testFile, "utf-8");
-          items = JSON.parse(raw) as any[];
-        } else {
-          // Convert old post format to mention format for backwards compatibility
-          const oldTestFile = path.join(process.cwd(), "src", "test-data", "reddit_test_posts.json");
-          raw = fs.readFileSync(oldTestFile, "utf-8");
-          const oldItems = JSON.parse(raw) as any[];
-          items = oldItems.map((post) => ({
-            id: post.id,
-            type: "post" as const,
-            title: post.title,
-            body: `${post.title}\n\n${post.selftext}`,
-            author: post.author,
-            subreddit: post.subreddit,
-            created_utc: post.created_utc,
-            permalink: post.permalink,
-            metadata: post.metadata,
-          }));
+        // if (fs.existsSync(testFile)) {
+        //   raw = fs.readFileSync(testFile, "utf-8");
+        //   items = JSON.parse(raw) as any[];
+        // } else {
+        // Resolve repo root when Mastra runs compiled output from .mastra/output
+        const candidateRoots = [
+          process.cwd(),
+          path.resolve(process.cwd(), ".."),
+          path.resolve(process.cwd(), "..", ".."),
+          path.resolve(__dirname, "..", "..", ".."),
+          path.resolve(__dirname, "..", "..", "..", ".."),
+        ];
+
+        const oldTestFile = candidateRoots
+          .map((root) => path.join(root, "src", "test-data", "reddit_test_posts.json"))
+          .find((filePath) => fs.existsSync(filePath));
+
+        if (!oldTestFile) {
+          throw new Error("Unable to locate reddit_test_posts.json in src/test-data");
         }
+
+        raw = fs.readFileSync(oldTestFile, "utf-8");
+        const oldItems = JSON.parse(raw) as any[];
+        items = oldItems.map((post) => ({
+          id: post.id,
+          type: "post" as const,
+          title: post.title,
+          body: `${post.title}\n\n${post.selftext}`,
+          author: post.author,
+          subreddit: post.subreddit,
+          created_utc: post.created_utc,
+          permalink: post.permalink,
+          metadata: post.metadata,
+        }));
+        console.log(`📄 Loaded ${items.length} test mentions from ${oldTestFile}`);
+        // }
+
+        // Convert old post format to mention format for backwards compatibility
 
         // Filter by freshness
         const cutoffTime = Math.floor(Date.now() / 1000) - (freshnessHours || 2) * 60 * 60;
 
         const filtered = items
-          .filter((m) => (m.created_utc || 0) > cutoffTime)
+          // .filter((m) => (m.created_utc || 0) > cutoffTime)
           .slice(0, maxMentions || 25)
           .map((mention) => ({
             id: mention.id,
@@ -105,6 +128,8 @@ export const redditMonitorTool = createTool({
             context: mention.context,
             metadata: mention.metadata,
           }));
+
+        console.log(`✅ Returning ${filtered.length} fresh mentions from test data`);
 
         return { mentions: filtered, totalFetched: filtered.length, unreadCount: filtered.length };
       } catch (err) {
@@ -122,9 +147,9 @@ export const redditMonitorTool = createTool({
     }
 
     const reddit = new Snoowrap({
-      userAgent: process.env.REDDIT_USER_AGENT || "Happenings Event Bot v1.0 (by /u/Happenings_bot)",
-      clientId: process.env.REDDIT_CLIENT_ID!,
-      clientSecret: process.env.REDDIT_CLIENT_SECRET!,
+      userAgent: 'Happenings_on_bot',
+      // clientId: process.env.REDDIT_CLIENT_ID!,
+      // clientSecret: process.env.REDDIT_CLIENT_SECRET!,
       username: process.env.REDDIT_USERNAME,
       password: process.env.REDDIT_PASSWORD,
     });
@@ -137,6 +162,7 @@ export const redditMonitorTool = createTool({
       // @ts-ignore - Snoowrap types can be incomplete
       const inbox = await reddit.getUnreadMessages({ limit: maxMentions });
 
+      console.log(`📥 Fetched ${inbox.length} unread messages from Reddit inbox`);
       // Filter for username mentions only
       const mentions = inbox.filter((item: any) => {
         // Check if this is a username mention

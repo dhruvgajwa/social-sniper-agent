@@ -1,0 +1,2484 @@
+{
+  "summary": {
+    "totalTests": 50,
+    "passed": 50,
+    "failed": 0,
+    "passRate": "100.0%",
+    "byCategory": {
+      "high_intent_clear": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0
+      },
+      "high_intent_implicit": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "low_intent": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "corner_case": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0
+      }
+    },
+    "byStage": {
+      "intentClassification": {
+        "passed": 50,
+        "failed": 0
+      },
+      "tagExtraction": {
+        "passed": 32,
+        "failed": 0
+      },
+      "geocoding": {
+        "passed": 37,
+        "failed": 0
+      },
+      "eventSearch": {
+        "passed": 38,
+        "failed": 0
+      },
+      "responseGeneration": {
+        "passed": 38,
+        "failed": 0
+      }
+    },
+    "failedTests": [],
+    "duration": 210058
+  },
+  "results": [
+    {
+      "testId": "TC001",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Music",
+            "Jazz/Blues"
+          ],
+          "actualTags": [
+            "Wellness & Health",
+            "Arts & Culture",
+            "Music",
+            "Mind & Body",
+            "Literary",
+            "Live Music",
+            "Casual",
+            "Meditation",
+            "Jazz/Blues",
+            "Coffee/Tea Events",
+            "Trivia Nights",
+            "Board Games"
+          ],
+          "matchedTags": [
+            "music",
+            "jazz/blues"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 5084
+    },
+    {
+      "testId": "TC002",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Comedy",
+            "Stand-up Comedy"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Tech & Innovation",
+            "Comedy",
+            "Meetups",
+            "Workshops",
+            "Hackathons",
+            "Stand-up Comedy",
+            "Improv Shows",
+            "Tech Talks",
+            "AI/ML Workshops",
+            "Hackathons"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "comedy",
+            "stand-up comedy"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Mumbai",
+          "actualCity": "Mumbai",
+          "coordinates": {
+            "lat": 19.076,
+            "lng": 72.8777
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 4,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Kenny Sebastian Live",
+            "CHEMBUR KIDS CARNIVAL",
+            "Telling Lies - A Standup Solo by Aashish Solanki"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3931
+    },
+    {
+      "testId": "TC003",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Food & Drink",
+            "Fine Dining"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Arts & Culture",
+            "Entertainment",
+            "Dining Experiences",
+            "Visual Arts",
+            "Theatre",
+            "Food Events",
+            "Fine Dining",
+            "Art Exhibitions",
+            "Theatre/Drama",
+            "Wine Tasting",
+            "Street Food"
+          ],
+          "matchedTags": [
+            "food & drink",
+            "fine dining"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4601
+    },
+    {
+      "testId": "TC004",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Tech & Innovation",
+            "Hackathons",
+            "Tech Networking"
+          ],
+          "actualTags": [
+            "Tech & Innovation",
+            "Social & Networking",
+            "Meetups",
+            "Professional",
+            "Workshops",
+            "Hackathons",
+            "Startup Events",
+            "Networking Events",
+            "Tech Talks",
+            "AI/ML Workshops",
+            "Hackathons"
+          ],
+          "matchedTags": [
+            "tech & innovation",
+            "hackathons"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Hyderabad",
+          "actualCity": "Hyderabad",
+          "coordinates": {
+            "lat": 17.385,
+            "lng": 78.4867
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 4,
+          "minExpected": 1,
+          "sampleEvents": [
+            "LITJAM Hyderabad: Pyaar ka Jam - A Live Music Jam",
+            "Medical Coding Free Demo",
+            "Free Education in Switzerland – Live Guidance Session"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 8441
+    },
+    {
+      "testId": "TC005",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Wellness & Health",
+            "Yoga",
+            "Wellness Retreats"
+          ],
+          "actualTags": [
+            "Wellness & Health",
+            "Mind & Body",
+            "Retreats",
+            "Yoga",
+            "Meditation",
+            "Spa/Wellness",
+            "Wellness Retreats"
+          ],
+          "matchedTags": [
+            "wellness & health",
+            "yoga",
+            "wellness retreats"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Pune",
+          "actualCity": "Pune",
+          "coordinates": {
+            "lat": 18.5204,
+            "lng": 73.8567
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 3,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Free Weekly Sahaja Yoga Meditation for all",
+            "International Conferences on Medical and Health Science ( ICMHS )",
+            "today"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 7372
+    },
+    {
+      "testId": "TC006",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Music",
+            "Electronic/EDM",
+            "DJ Nights"
+          ],
+          "actualTags": [
+            "Music",
+            "DJ/Club",
+            "Music Festivals",
+            "DJ Nights",
+            "Electronic/EDM"
+          ],
+          "matchedTags": [
+            "music",
+            "electronic/edm",
+            "dj nights"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Goa",
+          "actualCity": "Goa",
+          "coordinates": {
+            "lat": 15.2993,
+            "lng": 74.124
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Vivaan - Handpan &amp; World Music Festival",
+            "Vivaan - Handpan &amp;amp; World Music Festival",
+            "Vivaan - Handpan &amp; World Music Festival"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3632
+    },
+    {
+      "testId": "TC007",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Arts & Culture",
+            "Art Exhibitions",
+            "Visual Arts"
+          ],
+          "actualTags": [
+            "Sports & Fitness",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Social & Networking",
+            "Watch Parties",
+            "Participatory Sports",
+            "Visual Arts",
+            "Art Exhibitions",
+            "Startup Events",
+            "Themed Parties"
+          ],
+          "matchedTags": [
+            "arts & culture",
+            "art exhibitions",
+            "visual arts"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Delhi",
+          "actualCity": "Delhi",
+          "coordinates": {
+            "lat": 28.6139,
+            "lng": 77.209
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Singapore Education Fair 2026 in Delhi",
+            "HUBBARD DIANETICS SEMINAR",
+            "Good Beginnings - Workshop & Stage Reading"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4627
+    },
+    {
+      "testId": "TC008",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Outdoor & Adventure",
+            "Hiking/Trekking"
+          ],
+          "actualTags": [
+            "Social & Networking",
+            "Entertainment",
+            "Sports & Fitness",
+            "Casual",
+            "Gaming",
+            "Nature",
+            "Extreme Sports",
+            "Trivia Nights",
+            "Board Games",
+            "Team Sports",
+            "Hiking/Trekking",
+            "Camping"
+          ],
+          "matchedTags": [
+            "hiking/trekking"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Run Miles Bring Smiles – 2026 Edition",
+            "Build a RAG app with Redis",
+            "Professional Networking and Dinner Meetup on Church Street"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3742
+    },
+    {
+      "testId": "TC009",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Music",
+            "Open Mic",
+            "Arts & Culture"
+          ],
+          "actualTags": [
+            "Music",
+            "Arts & Culture",
+            "Live Performances",
+            "Open Mic",
+            "Poetry Events"
+          ],
+          "matchedTags": [
+            "music",
+            "open mic",
+            "arts & culture"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4390
+    },
+    {
+      "testId": "TC010",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Tech & Innovation",
+            "Startup Events",
+            "Networking Events"
+          ],
+          "actualTags": [
+            "Tech & Innovation",
+            "Social & Networking",
+            "Arts & Culture",
+            "Meetups",
+            "Professional",
+            "Visual Arts",
+            "Museums",
+            "Startup Events",
+            "Networking Events",
+            "Tech Talks",
+            "Art Exhibitions",
+            "Museum Visits"
+          ],
+          "matchedTags": [
+            "tech & innovation",
+            "startup events",
+            "networking events"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 5393
+    },
+    {
+      "testId": "TC011",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Food & Drink",
+            "Food Festivals",
+            "Street Food"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Tech & Innovation",
+            "Dining Experiences",
+            "Food Events",
+            "Meetups",
+            "Workshops",
+            "Fine Dining",
+            "Street Food",
+            "Food Festivals",
+            "Brunches",
+            "Tech Talks"
+          ],
+          "matchedTags": [
+            "food & drink",
+            "food festivals",
+            "street food"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Chennai",
+          "actualCity": "Chennai",
+          "coordinates": {
+            "lat": 13.0827,
+            "lng": 80.2707
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 1,
+          "minExpected": 1,
+          "sampleEvents": [
+            "The Great Madras Bake Sale"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4678
+    },
+    {
+      "testId": "TC012",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Sports & Fitness",
+            "Cricket",
+            "Watch Parties"
+          ],
+          "actualTags": [
+            "Sports & Fitness",
+            "Entertainment",
+            "Food & Drink",
+            "Watch Parties",
+            "Bars & Pubs",
+            "Participatory Sports",
+            "Fitness Classes",
+            "Cricket",
+            "Football/Soccer",
+            "Film Screenings",
+            "Wine Tasting",
+            "Beer/Brewery Tours"
+          ],
+          "matchedTags": [
+            "sports & fitness",
+            "cricket",
+            "watch parties"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Run Miles Bring Smiles – 2026 Edition",
+            "Build a RAG app with Redis",
+            "Saree Soiree - Open Mic"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4642
+    },
+    {
+      "testId": "TC013",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Food & Drink",
+            "Wine Tasting",
+            "Beer/Brewery Tours"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Outdoor & Adventure",
+            "Wine Tasting",
+            "Beer/Brewery Tours",
+            "Cycling Tours"
+          ],
+          "matchedTags": [
+            "food & drink",
+            "wine tasting",
+            "beer/brewery tours"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 2,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Farm Retreat",
+            "Sholay (1975): Trek &amp; Shooting Spots Exploration"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3518
+    },
+    {
+      "testId": "TC014",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Board Games",
+            "Trivia Nights"
+          ],
+          "actualTags": [
+            "Music",
+            "Entertainment",
+            "DJ Nights",
+            "Board Games",
+            "Trivia Nights"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "board games",
+            "trivia nights"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Build a RAG app with Redis",
+            "OG Open Mic & Jamming Night - Cubbon Jams",
+            "Open mic"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4566
+    },
+    {
+      "testId": "TC015",
+      "category": "high_intent_clear",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Wellness & Health",
+            "Meditation",
+            "Sound Healing"
+          ],
+          "actualTags": [
+            "Wellness & Health",
+            "Alternative Healing",
+            "Meditation",
+            "Sound Healing"
+          ],
+          "matchedTags": [
+            "wellness & health",
+            "meditation",
+            "sound healing"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 2,
+          "minExpected": 1,
+          "sampleEvents": [
+            "OSHO |  KRIYA  |  BREATH WORK | MEDITATION",
+            "Being Me: Living with Authenticity"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3745
+    },
+    {
+      "testId": "TC016",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Music"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Arts & Culture",
+            "Entertainment",
+            "Dining Experiences",
+            "Visual Arts",
+            "Theatre",
+            "Live Music",
+            "Fine Dining",
+            "Art Exhibitions",
+            "Theatre/Drama",
+            "Wine Tasting",
+            "Live Performances"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "food & drink",
+            "music"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3391
+    },
+    {
+      "testId": "TC017",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Social & Networking"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Social & Networking"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "social & networking"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Build a RAG app with Redis",
+            "Professional Networking and Dinner Meetup on Church Street",
+            "DRUM CIRCLE"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3614
+    },
+    {
+      "testId": "TC018",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Social & Networking",
+            "Networking Events",
+            "Community"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Wellness & Health",
+            "Social & Networking",
+            "Food Events",
+            "Cultural Events",
+            "Meetups",
+            "Gaming Events",
+            "Cocktail Events",
+            "Coffee/Tea Events",
+            "Poetry Events",
+            "Design Events",
+            "Startup Events",
+            "Self-care Events",
+            "Networking Events",
+            "Business Meetups",
+            "Singles Events",
+            "Volunteer Events",
+            "Pet Meetups"
+          ],
+          "matchedTags": [
+            "social & networking",
+            "networking events"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3393
+    },
+    {
+      "testId": "TC019",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Arts & Culture",
+            "Entertainment",
+            "Food & Drink"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Outdoor & Adventure",
+            "Wellness & Health",
+            "Social & Networking",
+            "Food Events",
+            "Cultural Events",
+            "Gaming Events",
+            "Cocktail Events",
+            "Coffee/Tea Events",
+            "Poetry Events",
+            "Design Events",
+            "Startup Events",
+            "Self-care Events",
+            "Networking Events",
+            "Singles Events",
+            "Volunteer Events"
+          ],
+          "matchedTags": [
+            "arts & culture",
+            "entertainment",
+            "food & drink"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Mumbai",
+          "actualCity": "Mumbai",
+          "coordinates": {
+            "lat": 19.076,
+            "lng": 72.8777
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Page to Stage - Dramatised Reading of Antaray",
+            "Page to Stage: Kumarswar - Ek Gandharva Katha",
+            "Afsana – The Somaiya Storytelling Festival"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3243
+    },
+    {
+      "testId": "TC020",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Food & Drink",
+            "Entertainment",
+            "Arts & Culture"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Arts & Culture",
+            "Entertainment",
+            "Dining Experiences",
+            "Visual Arts",
+            "Theatre",
+            "Fine Dining",
+            "Art Exhibitions",
+            "Theatre/Drama",
+            "Wine Tasting"
+          ],
+          "matchedTags": [
+            "food & drink",
+            "entertainment",
+            "arts & culture"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4184
+    },
+    {
+      "testId": "TC021",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Social & Networking",
+            "Outdoor & Adventure",
+            "Entertainment"
+          ],
+          "actualTags": [
+            "Social & Networking",
+            "Outdoor & Adventure",
+            "Entertainment",
+            "Professional",
+            "Nature",
+            "Gaming",
+            "Networking Events",
+            "Hiking/Trekking",
+            "Trivia Nights",
+            "Team Sports"
+          ],
+          "matchedTags": [
+            "social & networking",
+            "outdoor & adventure",
+            "entertainment"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Build a RAG app with Redis",
+            "Professional Networking and Dinner Meetup on Church Street",
+            "Farm Retreat"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3494
+    },
+    {
+      "testId": "TC022",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Workshops"
+          ],
+          "actualTags": [
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Wellness & Health",
+            "Workshops",
+            "Health Workshops",
+            "Writing Workshops",
+            "Craft Workshops",
+            "AI/ML Workshops",
+            "Mental Health Workshops"
+          ],
+          "matchedTags": [
+            "arts & culture",
+            "tech & innovation",
+            "workshops"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Pune",
+          "actualCity": "Pune",
+          "coordinates": {
+            "lat": 18.5204,
+            "lng": 73.8567
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Australia Education Fair 2026 in Pune",
+            "Mandai Heritage Walk | Pune | PHW",
+            "Couple Pottery Workshop"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3246
+    },
+    {
+      "testId": "TC023",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Social & Networking",
+            "Pet Meetups",
+            "Outdoor & Adventure"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Wellness & Health",
+            "Social & Networking",
+            "Food Events",
+            "Cultural Events",
+            "Meetups",
+            "Gaming Events",
+            "Cocktail Events",
+            "Coffee/Tea Events",
+            "Poetry Events",
+            "Design Events",
+            "Startup Events",
+            "Self-care Events",
+            "Networking Events",
+            "Business Meetups",
+            "Singles Events",
+            "Volunteer Events",
+            "Pet Meetups"
+          ],
+          "matchedTags": [
+            "social & networking",
+            "pet meetups"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3946
+    },
+    {
+      "testId": "TC024",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Sports & Fitness",
+            "Running/Marathons"
+          ],
+          "actualTags": [
+            "Sports & Fitness",
+            "Participatory Sports",
+            "Fitness Classes",
+            "Running/Marathons",
+            "CrossFit/HIIT"
+          ],
+          "matchedTags": [
+            "sports & fitness",
+            "running/marathons"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Chennai",
+          "actualCity": "Chennai",
+          "coordinates": {
+            "lat": 13.0827,
+            "lng": 80.2707
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Run to End Polio – Awareness Run 2026",
+            "Wheel Pottery Workshop",
+            "Pink Sakhi Run 2026"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3599
+    },
+    {
+      "testId": "TC025",
+      "category": "high_intent_implicit",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Music",
+            "Food & Drink",
+            "Themed Parties"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Music",
+            "Food & Drink",
+            "DJ/Club",
+            "Bars & Pubs",
+            "Comedy",
+            "Visual Arts",
+            "DJ Nights",
+            "Cocktail Events",
+            "Themed Parties",
+            "Live Performances",
+            "Art Exhibitions"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "music",
+            "food & drink",
+            "themed parties"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Goa",
+          "actualCity": "Goa",
+          "coordinates": {
+            "lat": 15.2993,
+            "lng": 74.124
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 1,
+          "sampleEvents": [
+            "Vivaan - Handpan &amp; World Music Festival",
+            "Get Roasted By Nishant Tanwar",
+            "Quadrant Life Crisis- Stand Up Solo by Navin Kumar"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3006
+    },
+    {
+      "testId": "TC026",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1158
+    },
+    {
+      "testId": "TC027",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1547
+    },
+    {
+      "testId": "TC028",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1658
+    },
+    {
+      "testId": "TC029",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 2360
+    },
+    {
+      "testId": "TC030",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1510
+    },
+    {
+      "testId": "TC031",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1113
+    },
+    {
+      "testId": "TC032",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 2376
+    },
+    {
+      "testId": "TC033",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1464
+    },
+    {
+      "testId": "TC034",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1788
+    },
+    {
+      "testId": "TC035",
+      "category": "low_intent",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 2227
+    },
+    {
+      "testId": "TC036",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 9457
+    },
+    {
+      "testId": "TC037",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Music",
+            "Concerts"
+          ],
+          "actualTags": [
+            "Music",
+            "Concerts"
+          ],
+          "matchedTags": [
+            "music",
+            "concerts"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "OG Open Mic & Jamming Night - Cubbon Jams",
+            "Open mic",
+            "Baithak -Santoor Recital"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 15311
+    },
+    {
+      "testId": "TC038",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3654
+    },
+    {
+      "testId": "TC039",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1252
+    },
+    {
+      "testId": "TC040",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Music",
+            "Concerts"
+          ],
+          "actualTags": [
+            "Music",
+            "Tech & Innovation",
+            "Live Music",
+            "Concerts",
+            "Meetups",
+            "Workshops",
+            "Live Performances",
+            "Indie/Alternative",
+            "Rock/Metal",
+            "Tech Talks",
+            "AI/ML Workshops"
+          ],
+          "matchedTags": [
+            "music",
+            "concerts"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Architecting for Scale: Why MySQL, MongoDB, Redis & Kafka Choose Their DSA",
+            "Build a RAG app with Redis",
+            "OG Open Mic & Jamming Night - Cubbon Jams"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4312
+    },
+    {
+      "testId": "TC041",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 2707
+    },
+    {
+      "testId": "TC042",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "LOW",
+          "actual": "LOW",
+          "confidence": 0.85
+        }
+      },
+      "duration": 1319
+    },
+    {
+      "testId": "TC043",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Social & Networking"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Music",
+            "Food & Drink",
+            "DJ/Club",
+            "Bars & Pubs",
+            "Comedy",
+            "Visual Arts",
+            "DJ Nights",
+            "Cocktail Events",
+            "Themed Parties",
+            "Live Performances",
+            "Art Exhibitions"
+          ],
+          "matchedTags": [
+            "entertainment"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Build a RAG app with Redis",
+            "OG Open Mic & Jamming Night - Cubbon Jams",
+            "Open mic"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3628
+    },
+    {
+      "testId": "TC044",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Gaming Events"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Wellness & Health",
+            "Social & Networking",
+            "Food Events",
+            "Cultural Events",
+            "Gaming Events",
+            "Cocktail Events",
+            "Coffee/Tea Events",
+            "Poetry Events",
+            "Design Events",
+            "Startup Events",
+            "Self-care Events",
+            "Networking Events",
+            "Singles Events",
+            "Volunteer Events"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "gaming events"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3608
+    },
+    {
+      "testId": "TC045",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Tech & Innovation"
+          ],
+          "actualTags": [
+            "Tech & Innovation",
+            "Social & Networking",
+            "Meetups",
+            "Tech Talks",
+            "Tech Networking",
+            "Business Meetups",
+            "Pet Meetups"
+          ],
+          "matchedTags": [
+            "tech & innovation"
+          ]
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Architecting for Scale: Why MySQL, MongoDB, Redis & Kafka Choose Their DSA",
+            "Build a RAG app with Redis",
+            "Professional Networking and Dinner Meetup on Church Street"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3752
+    },
+    {
+      "testId": "TC046",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Music",
+            "Themed Parties"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Music",
+            "Food & Drink",
+            "DJ/Club",
+            "Bars & Pubs",
+            "Comedy",
+            "Visual Arts",
+            "DJ Nights",
+            "Cocktail Events",
+            "Themed Parties",
+            "Live Performances",
+            "Art Exhibitions"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "music",
+            "themed parties"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Build a RAG app with Redis",
+            "OG Open Mic & Jamming Night - Cubbon Jams",
+            "Open mic"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3458
+    },
+    {
+      "testId": "TC047",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "tagExtraction": {
+          "passed": true,
+          "expectedTags": [
+            "Entertainment",
+            "Music",
+            "Food & Drink"
+          ],
+          "actualTags": [
+            "Entertainment",
+            "Food & Drink",
+            "Arts & Culture",
+            "Tech & Innovation",
+            "Wellness & Health",
+            "Social & Networking",
+            "Food Events",
+            "Cultural Events",
+            "Gaming Events",
+            "Cocktail Events",
+            "Coffee/Tea Events",
+            "Poetry Events",
+            "Design Events",
+            "Startup Events",
+            "Self-care Events",
+            "Networking Events",
+            "Singles Events",
+            "Volunteer Events"
+          ],
+          "matchedTags": [
+            "entertainment",
+            "food & drink"
+          ]
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 3504
+    },
+    {
+      "testId": "TC048",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 6633
+    },
+    {
+      "testId": "TC049",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 8669
+    },
+    {
+      "testId": "TC050",
+      "category": "corner_case",
+      "passed": true,
+      "stages": {
+        "intentClassification": {
+          "passed": true,
+          "expected": "HIGH",
+          "actual": "HIGH",
+          "confidence": 0.85
+        },
+        "geocoding": {
+          "passed": true,
+          "expectedCity": "Bangalore",
+          "actualCity": "Bangalore",
+          "coordinates": {
+            "lat": 12.9716,
+            "lng": 77.5946
+          }
+        },
+        "eventSearch": {
+          "passed": true,
+          "eventsFound": 5,
+          "minExpected": 0,
+          "sampleEvents": [
+            "Bengaluru Habba 2026",
+            "Bengaluru Karaga Festival 2026",
+            "Karnasapatham"
+          ]
+        },
+        "responseGeneration": {
+          "passed": true,
+          "responseLength": 0,
+          "hasEventLinks": false,
+          "error": "Skipped - ANTHROPIC_API_KEY not set"
+        }
+      },
+      "duration": 4038
+    }
+  ],
+  "runAt": "2026-01-14T10:26:59.697Z"
+}

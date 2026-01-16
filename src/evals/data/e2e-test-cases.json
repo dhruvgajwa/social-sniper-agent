@@ -1,0 +1,821 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "createdAt": "2026-01-14",
+    "description": "Comprehensive E2E test cases for social-sniper-agent event recommendation system",
+    "totalCases": 50,
+    "distribution": {
+      "high_intent_clear": 15,
+      "high_intent_implicit": 10,
+      "low_intent": 10,
+      "corner_cases": 15
+    }
+  },
+  "testCases": [
+    {
+      "id": "TC001",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot looking for a jazz night in Bangalore this weekend. Something chill where I can unwind with friends.",
+        "subreddit": "r/bangalore",
+        "author": "music_lover_92"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Music", "Jazz/Blues"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC002",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "Hey u/Happenings_bot! Any good comedy shows happening in Mumbai next week? Looking for standup specifically.",
+        "subreddit": "r/mumbai",
+        "author": "laughing_buddha"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Comedy", "Stand-up Comedy"],
+        "expectedCity": "Mumbai",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC003",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot need recommendations for a romantic anniversary dinner in Koramangala. Budget around 5k for two.",
+        "subreddit": "r/bangalore",
+        "author": "couple_goals_2020"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Food & Drink", "Fine Dining"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC004",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot any hackathons or tech meetups in Hyderabad this month? Looking to network with other devs.",
+        "subreddit": "r/hyderabad",
+        "author": "coder_hyd"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Tech & Innovation", "Hackathons", "Tech Networking"],
+        "expectedCity": "Hyderabad",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC005",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "Hey u/Happenings_bot, can you find me a yoga retreat or wellness workshop happening around Pune this weekend?",
+        "subreddit": "r/pune",
+        "author": "zen_seeker"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Wellness & Health", "Yoga", "Wellness Retreats"],
+        "expectedCity": "Pune",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC006",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot looking for EDM/electronic music parties in Goa for New Year week!",
+        "subreddit": "r/goa",
+        "author": "party_animal_69"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Music", "Electronic/EDM", "DJ Nights"],
+        "expectedCity": "Goa",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC007",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot any art exhibitions or gallery openings in Delhi NCR? Interested in contemporary art.",
+        "subreddit": "r/delhi",
+        "author": "art_enthusiast"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Arts & Culture", "Art Exhibitions", "Visual Arts"],
+        "expectedCity": "Delhi",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC008",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot need a good trekking group or hiking event near Bangalore. Preferably a day trip.",
+        "subreddit": "r/bangalore",
+        "author": "trek_lover"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Outdoor & Adventure", "Hiking/Trekking"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC009",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "Hey u/Happenings_bot! Where can I find a good open mic night in Indiranagar? Want to perform some poetry.",
+        "subreddit": "r/bangalore",
+        "author": "poet_soul"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Music", "Open Mic", "Arts & Culture"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC010",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot looking for a startup networking event or founder meetup in HSR Layout, Bangalore.",
+        "subreddit": "r/startupindia",
+        "author": "founder_mode"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": [
+          "Tech & Innovation",
+          "Startup Events",
+          "Networking Events"
+        ],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC011",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot any good food festivals or street food events happening in Chennai?",
+        "subreddit": "r/chennai",
+        "author": "foodie_chennai"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Food & Drink", "Food Festivals", "Street Food"],
+        "expectedCity": "Chennai",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC012",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "Hey u/Happenings_bot, want to watch the India vs Australia match at a sports bar in Bangalore. Any screenings?",
+        "subreddit": "r/cricket",
+        "author": "cricket_fanatic"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Sports & Fitness", "Cricket", "Watch Parties"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC013",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot can you recommend a wine tasting or brewery tour in Bangalore? Looking for something this Saturday.",
+        "subreddit": "r/bangalore",
+        "author": "wine_enthusiast"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Food & Drink", "Wine Tasting", "Beer/Brewery Tours"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC014",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot looking for board game cafes or trivia nights in Koramangala area!",
+        "subreddit": "r/bangalore",
+        "author": "board_gamer"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Board Games", "Trivia Nights"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC015",
+      "category": "high_intent_clear",
+      "post": {
+        "text": "u/Happenings_bot any meditation or sound healing sessions in Bangalore? Need to destress after a hectic week.",
+        "subreddit": "r/bangalore",
+        "author": "mindful_living"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Wellness & Health", "Meditation", "Sound Healing"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC016",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot my girlfriend's birthday is coming up. Need something special in Bangalore, maybe a concert or nice dinner?",
+        "subreddit": "r/bangalore",
+        "author": "bf_planning"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Food & Drink", "Music"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC017",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot bored af this weekend in Bangalore. What's happening around here?",
+        "subreddit": "r/bangalore",
+        "author": "bored_guy"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Social & Networking"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC018",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot new to Bangalore, want to make friends. Any social events or meetups for newcomers?",
+        "subreddit": "r/bangalore",
+        "author": "new_in_town"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": [
+          "Social & Networking",
+          "Networking Events",
+          "Community"
+        ],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC019",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot taking my parents out this weekend. They're visiting from out of town. Any family-friendly events in Mumbai?",
+        "subreddit": "r/mumbai",
+        "author": "family_time"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Arts & Culture", "Entertainment", "Food & Drink"],
+        "expectedCity": "Mumbai",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC020",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot first date ideas in Bangalore? Nothing too fancy but something fun and unique.",
+        "subreddit": "r/bangalore",
+        "author": "dating_noob"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Food & Drink", "Entertainment", "Arts & Culture"],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC021",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot office team outing ideas for 15 people in Bangalore? Budget is around 30k total.",
+        "subreddit": "r/bangalore",
+        "author": "hr_manager"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": [
+          "Social & Networking",
+          "Outdoor & Adventure",
+          "Entertainment"
+        ],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC022",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot looking to learn something new this month. Any interesting workshops in Pune?",
+        "subreddit": "r/pune",
+        "author": "learner_2026"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Arts & Culture", "Tech & Innovation", "Workshops"],
+        "expectedCity": "Pune",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC023",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot my dog needs socialization. Any pet-friendly events or dog parks meetups in Bangalore?",
+        "subreddit": "r/bangalore",
+        "author": "dog_parent"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": [
+          "Social & Networking",
+          "Pet Meetups",
+          "Outdoor & Adventure"
+        ],
+        "expectedCity": "Bangalore",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC024",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot want to improve my fitness. Any running groups or marathon training in Chennai?",
+        "subreddit": "r/chennai",
+        "author": "fitness_journey"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Sports & Fitness", "Running/Marathons"],
+        "expectedCity": "Chennai",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC025",
+      "category": "high_intent_implicit",
+      "post": {
+        "text": "u/Happenings_bot bachelor party ideas in Goa? We're a group of 8 guys, want something wild!",
+        "subreddit": "r/goa",
+        "author": "best_man_duties"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": [
+          "Entertainment",
+          "Music",
+          "Food & Drink",
+          "Themed Parties"
+        ],
+        "expectedCity": "Goa",
+        "minEventsExpected": 1
+      }
+    },
+    {
+      "id": "TC026",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot what's the best pizza place in Bangalore?",
+        "subreddit": "r/bangalore",
+        "author": "pizza_lover"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Restaurant recommendation, not event search"
+      }
+    },
+    {
+      "id": "TC027",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot how's the traffic on ORR today?",
+        "subreddit": "r/bangalore",
+        "author": "commuter_pain"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Traffic query, not event-related"
+      }
+    },
+    {
+      "id": "TC028",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot can you recommend a good gym in Indiranagar?",
+        "subreddit": "r/bangalore",
+        "author": "gym_seeker"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Gym membership query, not an event"
+      }
+    },
+    {
+      "id": "TC029",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot what's the rent like in HSR Layout these days?",
+        "subreddit": "r/bangalore",
+        "author": "house_hunting"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Real estate query"
+      }
+    },
+    {
+      "id": "TC030",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot is Zomato better than Swiggy in Mumbai?",
+        "subreddit": "r/mumbai",
+        "author": "delivery_debate"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "App comparison, not event search"
+      }
+    },
+    {
+      "id": "TC031",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot what's the weather forecast for Bangalore next week?",
+        "subreddit": "r/bangalore",
+        "author": "weather_watcher"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Weather query"
+      }
+    },
+    {
+      "id": "TC032",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot where can I buy fresh vegetables in Koramangala?",
+        "subreddit": "r/bangalore",
+        "author": "home_cook"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Shopping query"
+      }
+    },
+    {
+      "id": "TC033",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot any good co-working spaces in Bangalore?",
+        "subreddit": "r/bangalore",
+        "author": "remote_worker"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Workspace recommendation, not event"
+      }
+    },
+    {
+      "id": "TC034",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot what's the best internet provider in Chennai?",
+        "subreddit": "r/chennai",
+        "author": "internet_issues"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Service provider query"
+      }
+    },
+    {
+      "id": "TC035",
+      "category": "low_intent",
+      "post": {
+        "text": "u/Happenings_bot how do I register my vehicle in Karnataka?",
+        "subreddit": "r/bangalore",
+        "author": "new_car_owner"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "reason": "Administrative query"
+      }
+    },
+    {
+      "id": "TC036",
+      "category": "corner_case",
+      "description": "Mixed intent - event mention but primarily shopping",
+      "post": {
+        "text": "u/Happenings_bot going to Phoenix Mall for shopping, but if there's any event happening there, let me know!",
+        "subreddit": "r/bangalore",
+        "author": "mall_visitor"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Should recognize event intent despite shopping mention"
+      }
+    },
+    {
+      "id": "TC037",
+      "category": "corner_case",
+      "description": "Typo in location",
+      "post": {
+        "text": "u/Happenings_bot any good concerts in Banglore this weekend?",
+        "subreddit": "r/india",
+        "author": "typo_user"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Music", "Concerts"],
+        "expectedCity": "Bangalore",
+        "notes": "Should handle 'Banglore' typo"
+      }
+    },
+    {
+      "id": "TC038",
+      "category": "corner_case",
+      "description": "Negative sentiment but still event search",
+      "post": {
+        "text": "u/Happenings_bot I'm so depressed. Are there any fun things to do in Bangalore to cheer me up?",
+        "subreddit": "r/bangalore",
+        "author": "feeling_low"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Emotional context but still valid event search"
+      }
+    },
+    {
+      "id": "TC039",
+      "category": "corner_case",
+      "description": "Very vague request",
+      "post": {
+        "text": "u/Happenings_bot something something Bangalore?",
+        "subreddit": "r/bangalore",
+        "author": "vague_user"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "notes": "Too vague to determine intent"
+      }
+    },
+    {
+      "id": "TC040",
+      "category": "corner_case",
+      "description": "Hindi mixed with English (Hinglish)",
+      "post": {
+        "text": "u/Happenings_bot yaar koi accha concert hai kya Bangalore mein is weekend? Dosto ke saath jaana hai.",
+        "subreddit": "r/bangalore",
+        "author": "hinglish_user"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Music", "Concerts"],
+        "expectedCity": "Bangalore",
+        "notes": "Should understand Hinglish"
+      }
+    },
+    {
+      "id": "TC041",
+      "category": "corner_case",
+      "description": "Multiple cities mentioned",
+      "post": {
+        "text": "u/Happenings_bot traveling from Mumbai to Bangalore next week. Any events happening in either city?",
+        "subreddit": "r/india",
+        "author": "traveler"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Should prioritize destination city or handle both"
+      }
+    },
+    {
+      "id": "TC042",
+      "category": "corner_case",
+      "description": "Past tense - asking about past event",
+      "post": {
+        "text": "u/Happenings_bot how was the music festival that happened last weekend in Bangalore?",
+        "subreddit": "r/bangalore",
+        "author": "missed_it"
+      },
+      "expected": {
+        "intent": "LOW",
+        "shouldFindEvents": false,
+        "notes": "Past event - should not recommend, maybe suggest future events"
+      }
+    },
+    {
+      "id": "TC043",
+      "category": "corner_case",
+      "description": "Sarcastic/Joking tone",
+      "post": {
+        "text": "u/Happenings_bot find me a party where I can become a millionaire overnight in Bangalore lol 😂",
+        "subreddit": "r/bangalore",
+        "author": "joker_user"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Social & Networking"],
+        "expectedCity": "Bangalore",
+        "notes": "Despite sarcasm, there's party intent"
+      }
+    },
+    {
+      "id": "TC044",
+      "category": "corner_case",
+      "description": "Very specific niche interest",
+      "post": {
+        "text": "u/Happenings_bot any medieval reenactment or LARP events in Bangalore? I know it's a long shot.",
+        "subreddit": "r/bangalore",
+        "author": "larp_enthusiast"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Gaming Events"],
+        "expectedCity": "Bangalore",
+        "notes": "Niche interest - may not find exact match"
+      }
+    },
+    {
+      "id": "TC045",
+      "category": "corner_case",
+      "description": "No city mentioned at all",
+      "post": {
+        "text": "u/Happenings_bot any good tech meetups happening soon?",
+        "subreddit": "r/india",
+        "author": "no_city_user"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Tech & Innovation"],
+        "notes": "Should ask for city or use default"
+      }
+    },
+    {
+      "id": "TC046",
+      "category": "corner_case",
+      "description": "Emoji-heavy message",
+      "post": {
+        "text": "u/Happenings_bot 🎉🎊 party time!!! 🕺💃 Bangalore this Saturday??? 🔥🔥🔥",
+        "subreddit": "r/bangalore",
+        "author": "emoji_lover"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Music", "Themed Parties"],
+        "expectedCity": "Bangalore",
+        "notes": "Should parse intent despite heavy emoji use"
+      }
+    },
+    {
+      "id": "TC047",
+      "category": "corner_case",
+      "description": "Comparison question",
+      "post": {
+        "text": "u/Happenings_bot which is better for nightlife - Indiranagar or Koramangala? And what events are happening?",
+        "subreddit": "r/bangalore",
+        "author": "nightlife_comparison"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedTags": ["Entertainment", "Music", "Food & Drink"],
+        "expectedCity": "Bangalore",
+        "notes": "Comparison + event search"
+      }
+    },
+    {
+      "id": "TC048",
+      "category": "corner_case",
+      "description": "Budget constraint with no clear event type",
+      "post": {
+        "text": "u/Happenings_bot only have ₹500 to spend this weekend in Bangalore. What can I do?",
+        "subreddit": "r/bangalore",
+        "author": "budget_conscious"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Should find free or low-cost events"
+      }
+    },
+    {
+      "id": "TC049",
+      "category": "corner_case",
+      "description": "Neighborhood-only mention",
+      "post": {
+        "text": "u/Happenings_bot anything fun happening in Whitefield this weekend? Don't want to travel far.",
+        "subreddit": "r/bangalore",
+        "author": "whitefield_resident"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Should geocode Whitefield specifically"
+      }
+    },
+    {
+      "id": "TC050",
+      "category": "corner_case",
+      "description": "Future date far away",
+      "post": {
+        "text": "u/Happenings_bot planning my birthday in March. Any good events in Bangalore around March 15th?",
+        "subreddit": "r/bangalore",
+        "author": "march_birthday"
+      },
+      "expected": {
+        "intent": "HIGH",
+        "shouldFindEvents": true,
+        "expectedCity": "Bangalore",
+        "notes": "Future date - may have limited events"
+      }
+    }
+  ]
+}
