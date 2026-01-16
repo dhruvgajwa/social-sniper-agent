@@ -21,9 +21,10 @@ import { socialSniperWorkflow } from "./workflows/social-sniper-pipeline";
  *   - responseWriterAgent: Crafts human-like responses with Happenings URLs
  *   - queryToParamsAgent: Converts queries to search parameters (for direct site use)
  * - 1 Workflow (mention-based social sniper pipeline)
- * - Storage (LibSQL for workflow state)
+ * - Storage (LibSQL for workflow state and trace persistence)
  * - Logging (Pino for structured logs)
- * 
+ * - Observability (AI Tracing with DefaultExporter and ConsoleExporter)
+ *
  * Note: Tools auto-register and don't need to be listed here.
  */
 export const mastra = new Mastra({
@@ -38,14 +39,28 @@ export const mastra = new Mastra({
     socialSniperWorkflow,
   },
 
+  // Persistent storage (required for AI tracing)
   storage: new LibSQLStore({
-    url: ":memory:", // Use file://mastra.db for persistence
+    url: "file:./mastra.db",
   }),
 
   logger: new PinoLogger({
     name: "HappeningsBot",
     level: "info",
   }),
+
+  // AI Tracing Configuration
+  // When enabled: true, Mastra automatically includes:
+  // - DefaultExporter (persists to storage)
+  // - SensitiveDataFilter (redacts API keys, tokens, PII)
+  // - "always" sampling (100% of traces)
+  // For production, optionally add CloudExporter with MASTRA_CLOUD_ACCESS_TOKEN
+  observability: {
+    default: { enabled: true },
+  },
+
+  // Disable deprecated OTEL telemetry to suppress warnings
+  telemetry: { enabled: false },
 });
 
 // Export agents for independent use

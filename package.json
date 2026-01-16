@@ -11,7 +11,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eval:intent": "tsx src/evals/run-intent-evals.ts",
     "eval:response": "tsx src/evals/run-response-evals.ts",
-    "eval:view": "tsx src/evals/view-scores.ts"
+    "eval:view": "tsx src/evals/view-scores.ts",
+    "experiment:intent": "tsx src/evals/experiments/intent-classifier-experiment.ts",
+    "experiment:response": "tsx src/evals/experiments/response-writer-experiment.ts",
+    "experiment:events": "tsx src/evals/experiments/event-recommender-experiment.ts",
+    "experiment:all": "npm run experiment:intent && npm run experiment:response && npm run experiment:events"
   },
   "keywords": [
     "ai",
@@ -29,6 +33,7 @@
     "@mastra/core": "latest",
     "@mastra/evals": "^0.14.4",
     "@mastra/libsql": "latest",
+    "@mastra/loggers": "^0.10.19",
     "@mastra/memory": "latest",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
