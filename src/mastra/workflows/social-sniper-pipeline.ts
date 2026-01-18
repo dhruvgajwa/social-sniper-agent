@@ -59,6 +59,15 @@ const fetchMentionsStep = createStep({
   execute: async ({ inputData, mastra, runtimeContext }) => {
     const { botUsername, maxMentions, freshnessHours, markAsRead } = inputData;
     const allPosts: any[] = [];
+    const logger = mastra?.getLogger();
+    const startTime = Date.now();
+
+    logger?.info("fetch-mentions-started", {
+      botUsername,
+      maxMentions,
+      freshnessHours,
+      markAsRead,
+    });
 
     // Fetch mentions from Reddit
     const mentionResult = await redditMonitorTool.execute({
@@ -96,6 +105,14 @@ const fetchMentionsStep = createStep({
 
     allPosts.push(...redditPosts);
 
+    const latencyMs = Date.now() - startTime;
+    logger?.info("fetch-mentions-completed", {
+      botUsername,
+      totalFetched: allPosts.length,
+      unreadCount: mentionResult?.unreadCount || 0,
+      latencyMs,
+    });
+
     console.log(`📬 Fetched ${allPosts.length} mentions for u/${botUsername}`);
 
     return {
@@ -129,10 +146,19 @@ const classifyIntentStep = createStep({
     const { posts } = inputData;
     const intentAgent = mastra.getAgent("intentClassifierAgent");
     const highIntentPosts: any[] = [];
+    const logger = mastra?.getLogger();
+    const startTime = Date.now();
 
     const intentThreshold = parseFloat(process.env.INTENT_THRESHOLD || "0.8");
 
+    logger?.info("classify-intent-started", {
+      totalPosts: posts.length,
+      intentThreshold,
+    });
+
     for (const post of posts) {
+      const classifyStart = Date.now();
+
       const result = await intentAgent.generate(`Analyze this post:\n\n${post.text}`, {
         structuredOutput: {
           schema: z.object({
@@ -150,6 +176,17 @@ const classifyIntentStep = createStep({
 
       const { intent, confidence, reasoning, evidence } = classification;
 
+      // Log each classification result
+      logger?.info("post-classified", {
+        postId: post.id,
+        platform: post.platform,
+        intent,
+        confidence,
+        reasoning,
+        isHighIntent: intent === "HIGH" && confidence >= intentThreshold,
+        latencyMs: Date.now() - classifyStart,
+      });
+
       if (intent === "HIGH" && confidence >= intentThreshold) {
         highIntentPosts.push({
           ...post,
@@ -159,6 +196,13 @@ const classifyIntentStep = createStep({
         });
       }
     }
+
+    logger?.info("classify-intent-completed", {
+      totalProcessed: posts.length,
+      highIntentCount: highIntentPosts.length,
+      lowIntentCount: posts.length - highIntentPosts.length,
+      latencyMs: Date.now() - startTime,
+    });
 
     return {
       highIntentPosts,
@@ -188,8 +232,16 @@ const findEventsStep = createStep({
     const { highIntentPosts } = inputData;
     const eventAgent = mastra.getAgent("eventRecommenderAgent");
     const postsWithEvents: any[] = [];
+    const logger = mastra?.getLogger();
+    const startTime = Date.now();
+
+    logger?.info("find-events-started", {
+      totalHighIntentPosts: highIntentPosts.length,
+    });
 
     for (const post of highIntentPosts) {
+      const searchStart = Date.now();
+
       // REFACTORED: Pass just the post text - agent extracts everything it needs
       // Include parent context if available (for comment mentions)
       const query = post.parentContext
@@ -198,12 +250,28 @@ const findEventsStep = createStep({
 
       try {
         const result = await eventAgent.generate(query);
+        const recommendations = result.text || "";
+        const eventCount = (recommendations.match(/happenings\.dhruvgajwa\.com/g) || []).length;
+
+        logger?.info("post-events-found", {
+          postId: post.id,
+          platform: post.platform,
+          eventCount,
+          hasRecommendations: recommendations.length > 0,
+          latencyMs: Date.now() - searchStart,
+        });
 
         postsWithEvents.push({
           ...post,
-          recommendations: result.text || "",
+          recommendations,
         });
-      } catch (err) {
+      } catch (err: any) {
+        logger?.error("post-events-failed", {
+          postId: post.id,
+          platform: post.platform,
+          error: err.message,
+          latencyMs: Date.now() - searchStart,
+        });
         console.error(`[findEventsStep] Error processing post ${post.id}:`, err);
         postsWithEvents.push({
           ...post,
@@ -211,6 +279,12 @@ const findEventsStep = createStep({
         });
       }
     }
+
+    logger?.info("find-events-completed", {
+      totalProcessed: highIntentPosts.length,
+      totalMatched: postsWithEvents.filter(p => p.recommendations).length,
+      latencyMs: Date.now() - startTime,
+    });
 
     return {
       postsWithEvents,
@@ -241,8 +315,16 @@ const generateResponseStep = createStep({
     const { postsWithEvents } = inputData;
     const responseAgent = mastra.getAgent("responseWriterAgent");
     const drafts: any[] = [];
+    const logger = mastra?.getLogger();
+    const startTime = Date.now();
+
+    logger?.info("generate-response-started", {
+      totalPostsWithEvents: postsWithEvents.length,
+    });
 
     for (const post of postsWithEvents) {
+      const generateStart = Date.now();
+
       // REFACTORED: Simplified prompt - no pre-extracted context
       // The event recommendations already contain all the relevant info
       const prompt = `
@@ -258,16 +340,38 @@ Use the happeningsUrl from each event as the href link for the event title.
 
       try {
         const result = await responseAgent.generate(prompt);
+        const draftResponse = result.text || "";
+        const hasFooter = draftResponse.includes("🤖 *I'm Happenings Bot");
+
+        logger?.info("response-draft-generated", {
+          postId: post.id,
+          platform: post.platform,
+          responseLength: draftResponse.length,
+          hasFooter,
+          latencyMs: Date.now() - generateStart,
+        });
 
         drafts.push({
           post,
-          draftResponse: result.text || "",
+          draftResponse,
         });
-      } catch (err) {
+      } catch (err: any) {
+        logger?.error("response-draft-failed", {
+          postId: post.id,
+          platform: post.platform,
+          error: err.message,
+          latencyMs: Date.now() - generateStart,
+        });
         console.error(`[generateResponseStep] Error for post ${post.id}:`, err);
         drafts.push({ post, draftResponse: "" });
       }
     }
+
+    logger?.info("generate-response-completed", {
+      totalDrafts: drafts.length,
+      successfulDrafts: drafts.filter(d => d.draftResponse).length,
+      latencyMs: Date.now() - startTime,
+    });
 
     return {
       drafts,

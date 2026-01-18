@@ -1,5 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { ModerationProcessor } from "@mastra/core/processors";
+import { createToxicityScorer, createBiasScorer } from "@mastra/evals/scorers/llm";
 
 /**
  * Response Writer Agent
@@ -11,8 +12,10 @@ import { ModerationProcessor } from "@mastra/core/processors";
  * - Event titles MUST use Happenings URL as href (not ticket source)
  * - Each event listing links to happenings.dhruvgajwa.com/event/{id}
  *
- * NOTE: Live scorers are not configured due to @mastra/evals v0.14.4 limitations.
- * See EVALUATION_GUIDE.md for trace-based evaluation approach.
+ * LIVE SCORERS:
+ * - Toxicity: Detects harmful content (100% sampling - safety critical)
+ * - Bias: Detects unfair treatment (100% sampling - safety critical)
+ * Results auto-persist to mastra_scorers table.
  */
 export const responseWriterAgent = new Agent({
   name: "response-writer",
@@ -96,6 +99,20 @@ RULES:
 - No promotional language or marketing speak
 - Format all links properly for Reddit markdown
   `,
+
+  // Live scorers - auto-run on every agent call
+  // Results are persisted to mastra_scorers table
+  scorers: {
+    toxicity: {
+      scorer: createToxicityScorer({ model: "openai/gpt-4o-mini" }),
+      sampling: { type: "ratio", rate: 1.0 }, // 100% sampling for safety
+    },
+    bias: {
+      scorer: createBiasScorer({ model: "openai/gpt-4o-mini" }),
+      sampling: { type: "ratio", rate: 1.0 }, // 100% sampling for safety
+    },
+  },
+
   outputProcessors: [
     new ModerationProcessor({
       model: 'openai/gpt-4o-mini',

@@ -1,5 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { z } from "zod";
+import { createAnswerRelevancyScorer } from "@mastra/evals/scorers/llm";
 
 /**
  * Intent Classifier Agent
@@ -16,8 +17,9 @@ import { z } from "zod";
  * - reasoning: Brief explanation
  * - evidence: Key phrases/signals that indicate the intent
  *
- * NOTE: Live scorers are not configured due to @mastra/evals v0.14.4 limitations.
- * See EVALUATION_GUIDE.md for trace-based evaluation approach.
+ * LIVE SCORERS:
+ * - AnswerRelevancy: Checks if response addresses the input query (10% sampling)
+ * Results auto-persist to mastra_scorers table.
  */
 export const intentClassifierAgent = new Agent({
   name: "intent-classifier",
@@ -116,4 +118,13 @@ Example outputs:
 Be STRICT about distinguishing events from venues/services.
 Focus on INTENT only - don't try to extract location, budget, or other details.
   `,
+  
+  // Live scorers - auto-run on agent calls (sampled)
+  // Results are persisted to mastra_scorers table
+  scorers: {
+    relevancy: {
+      scorer: createAnswerRelevancyScorer({ model: "openai/gpt-4o-mini" }),
+      sampling: { type: "ratio", rate: 0.1 }, // 10% sampling to reduce cost
+    },
+  },
 });
