@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { mastra } from "./mastra";
 import { startWebhookServer } from "./server";
+import { mcpServer } from "./mcp-server";
 
 /**
  * Happenings Bot - Reddit Mention Handler
@@ -85,5 +86,22 @@ async function runHappeningsBot() {
 // Only run the bot when this file is executed directly (not when imported)
 // This prevents side-effects when other modules import `src/index.ts`.
 if (import.meta.url === `file://${process.argv[1]}`) {
+  // Start MCP server if enabled
+  const mcpEnabled = process.env.MCP_ENABLED === "true";
+  const mcpTransport = process.env.MCP_TRANSPORT || "stdio";
+
+  if (mcpEnabled) {
+    if (mcpTransport === "stdio" || mcpTransport === "both") {
+      console.log("🔌 Starting MCP server (stdio transport)...");
+      mcpServer.startStdio().catch((err) => {
+        console.error("❌ MCP stdio server failed:", err);
+      });
+    }
+    if (mcpTransport === "http" || mcpTransport === "both") {
+      // HTTP transport is handled by the webhook server (src/server.ts)
+      console.log("🔌 MCP HTTP transport enabled — routes served via webhook server");
+    }
+  }
+
   runHappeningsBot().catch(console.error);
 }

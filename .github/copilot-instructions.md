@@ -51,6 +51,13 @@ The bot respects rate limits (max 2 posts/hour) and post freshness windows (2-ho
    - `webhooks.ts` - Express handlers for Telegram/Slack approval callbacks
    - `server.ts` - Webhook server (auto-disabled when AUTO_APPROVE=true)
 
+5. **MCP Server** (`src/mcp-server.ts`):
+   - Exposes 9 read-only tools + 4 agents via Model Context Protocol
+   - `src/mcp-stdio.ts` - Stdio transport for Claude Desktop / Cursor
+   - `src/mcp-http.ts` - HTTP Streamable transport for remote clients
+   - Agents auto-convert to `ask_<name>` tools (e.g., `ask_eventRecommenderAgent`)
+   - Mutation tools (reddit-monitor, post-to-platform, notification) excluded for security
+
 ### Data Flow
 
 ```
