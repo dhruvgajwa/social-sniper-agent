@@ -12,6 +12,9 @@ export { notificationTool } from "./notification";
 
 // Event search tools (new enhanced version)
 export { eventSearchTool } from "./event-search";
+
+// Organizer hunting / scraper service
+export { scraperServiceTool } from "./scraper.service";
 export { geocodingTool, getQuickCoordinates, INDIAN_CITY_COORDINATES } from "./geocoding";
 export { intentToTagsTool, getAvailableTags } from "./intent-to-tags";
 
