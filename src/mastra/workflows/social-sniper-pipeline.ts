@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { createWorkflow, createStep } from "@mastra/core/workflows";
 import { z } from "zod";
 import { redditMonitorTool } from "../tools/reddit-monitor";
@@ -22,6 +23,33 @@ import { postToPlatformTool } from "../tools/post-to-platform";
  * NOTE: This bot reacts to mentions only - it does NOT crawl/scrape subreddits.
  * Users explicitly invoke the bot by mentioning u/Happenings_bot in their posts/comments.
  */
+
+// Pendo Agent Analytics for Happenings Bot (Social Sniper).
+// pendo is a runtime global supplied by the host. The guard keeps the pipeline
+// running when Pendo isn't loaded in this process.
+declare var pendo: { trackAgent: (eventType: string, metadata: object) => void };
+
+const PENDO_AGENT_ID = "cU-RV7WvIxivnckgmef8aM1Ieak";
+
+function trackAgent(
+  eventType: "prompt" | "agent_response" | "user_reaction",
+  metadata: {
+    conversationId: string;
+    messageId: string;
+    content: string;
+    modelUsed?: string;
+    suggestedPrompt?: boolean;
+    toolsUsed?: string[];
+    fileUploaded?: boolean;
+  }
+) {
+  if (typeof pendo === "undefined" || typeof pendo.trackAgent !== "function") return;
+  try {
+    pendo.trackAgent(eventType, { agentId: PENDO_AGENT_ID, ...metadata });
+  } catch (err) {
+    console.error(`[pendo] trackAgent("${eventType}") failed:`, err);
+  }
+}
 
 export const SocialPost = z.object({
   id: z.string(),
@@ -104,6 +132,17 @@ const fetchMentionsStep = createStep({
     });
 
     allPosts.push(...redditPosts);
+
+    // Pendo: each mention is a user prompt to Happenings Bot
+    for (const mention of mentions) {
+      trackAgent("prompt", {
+        conversationId: String(mention.id),
+        messageId: String(mention.id),
+        content: mention.body || "",
+        suggestedPrompt: false,
+        fileUploaded: false,
+      });
+    }
 
     const latencyMs = Date.now() - startTime;
     logger?.info("fetch-mentions-completed", {
@@ -224,6 +263,7 @@ const findEventsStep = createStep({
     postsWithEvents: z.array(
       HighIntentPost.extend({
         recommendations: z.string().optional(),
+        toolsUsed: z.array(z.string()).optional(),
       })
     ),
     totalMatched: z.number(),
@@ -252,6 +292,13 @@ const findEventsStep = createStep({
         const result = await eventAgent.generate(query);
         const recommendations = result.text || "";
         const eventCount = (recommendations.match(/happenings\.dhruvgajwa\.com/g) || []).length;
+        const toolsUsed = [
+          ...new Set(
+            (result.steps ?? []).flatMap((step) =>
+              (step.toolCalls ?? []).map((call) => call.payload.toolName)
+            )
+          ),
+        ];
 
         logger?.info("post-events-found", {
           postId: post.id,
@@ -264,6 +311,7 @@ const findEventsStep = createStep({
         postsWithEvents.push({
           ...post,
           recommendations,
+          toolsUsed,
         });
       } catch (err: any) {
         logger?.error("post-events-failed", {
@@ -300,7 +348,12 @@ const generateResponseStep = createStep({
   id: "generate-response",
   description: "Crafts personalized responses for each post",
   inputSchema: z.object({
-    postsWithEvents: z.array(HighIntentPost.extend({ recommendations: z.string().optional() })),
+    postsWithEvents: z.array(
+      HighIntentPost.extend({
+        recommendations: z.string().optional(),
+        toolsUsed: z.array(z.string()).optional(),
+      })
+    ),
   }),
   outputSchema: z.object({
     drafts: z.array(
@@ -350,6 +403,16 @@ Use the happeningsUrl from each event as the href link for the event title.
           hasFooter,
           latencyMs: Date.now() - generateStart,
         });
+
+        if (draftResponse) {
+          trackAgent("agent_response", {
+            conversationId: post.id,
+            messageId: randomUUID(),
+            content: draftResponse,
+            modelUsed: result.response?.modelId,
+            toolsUsed: post.toolsUsed ?? [],
+          });
+        }
 
         drafts.push({
           post,
